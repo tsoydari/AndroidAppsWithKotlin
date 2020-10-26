@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="NameStyle">
-        <item name="android:layout_marginTop">@dimen/layout_margin</item>
+    <style name="styleTextApp">
+        <item name="android:layout_marginTop">@dimen/dimMarginLayout</item>
         <item name="android:fontFamily">@font/roboto</item>
-        <item name="android:paddingTop">@dimen/small_padding</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">@dimen/text_size</item>
+        <item name="android:paddingTop">@dimen/dimPaddingSmall</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textSize">@dimen/dimTextSize</item>
     </style>
 </resources>

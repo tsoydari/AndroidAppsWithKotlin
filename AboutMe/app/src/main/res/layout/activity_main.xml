@@ -7,63 +7,63 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/name_text"
-        style="@style/NameStyle"
+        android:id="@+id/txtvProfileName"
+        style="@style/styleTextApp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/name"
+        android:text="@string/strProfileName"
         android:textAlignment="center" />
 
     <EditText
-        android:id="@+id/nickname_edit"
-        style="@style/NameStyle"
+        android:id="@+id/etEditNickname"
+        style="@style/styleTextApp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/what_is_your_nickname"
+        android:hint="@string/strHintEditNickname"
         android:inputType="textPersonName"
         android:textAlignment="center" />
 
     <Button
-        android:id="@+id/done_button"
+        android:id="@+id/btnEnterNickname"
         style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/layout_margin"
+        android:layout_marginTop="@dimen/dimMarginLayout"
         android:fontFamily="@font/roboto"
-        android:text="@string/done"
+        android:text="@string/strBtnEnterNickname"
         app:backgroundTint="@color/colorAccent" />
 
     <TextView
-        android:id="@+id/nickname_text"
+        android:id="@+id/txtvEnteringNickname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:visibility="gone" />
 
     <ImageView
-        android:id="@+id/star_image"
+        android:id="@+id/imgvStar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/layout_margin"
-        android:contentDescription="@string/yellow_star"
+        android:layout_marginTop="@dimen/dimMarginLayout"
+        android:contentDescription="@string/descriptIvStar"
         app:srcCompat="@android:drawable/btn_star_big_on" />
 
     <ScrollView
-        android:id="@+id/bio_scroll"
+        android:id="@+id/svLongText"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/bio_text"
-            style="@style/NameStyle"
+            android:id="@+id/txtvLongText"
+            style="@style/styleTextApp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lineSpacingMultiplier="1.2"
-            android:paddingStart="@dimen/padding"
-            android:paddingEnd="@dimen/padding"
-            android:text="@string/bio_text" />
+            android:paddingStart="@dimen/dimPadding"
+            android:paddingEnd="@dimen/dimPadding"
+            android:text="@string/strLongText" />
     </ScrollView>
 </LinearLayout>
 

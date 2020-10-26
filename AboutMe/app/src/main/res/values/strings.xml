@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">About Me</string>
-    <string name="name">Алена Швец</string>
-    <string name="yellow_star">Yellow Star</string>
-    <string name="bio_text">
+    <string name="appName">About Me</string>
+    <string name="strProfileName">Алена Швец</string>
+    <string name="descriptIvStar">Yellow Star</string>
+    <string name="strLongText">
         Глухой музыкант, слепой художник \n
         Люди вопрошают, как так можно \n
         Но я то знаю, они видят и слышат \n
@@ -45,6 +45,6 @@
         По коже стекает чёрной краской \n
         Искусство не может быть прекрасно \n
         Скрипки порванные, струны хлещут по рукам.</string>
-    <string name="what_is_your_nickname">What is your Nickname?</string>
-    <string name="done">DONE</string>
+    <string name="strHintEditNickname">What is your Nickname?</string>
+    <string name="strBtnEnterNickname">DONE</string>
 </resources>
