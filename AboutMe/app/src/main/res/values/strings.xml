@@ -1,7 +1,7 @@
 <resources>
     <string name="appName">About Me</string>
     <string name="strProfileName">Алена Швец</string>
-    <string name="descriptIvStar">Yellow Star</string>
+    <string name="strIvStar">Yellow Star</string>
     <string name="strLongText">
         Глухой музыкант, слепой художник \n
         Люди вопрошают, как так можно \n

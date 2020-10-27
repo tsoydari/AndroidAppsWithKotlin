@@ -5,9 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -20,10 +17,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addNickname(view: View) {
-        txtvEnteringNickname.text = etEditNickname.text
-        etEditNickname.visibility = View.GONE
+        tvEnteringNickname.text = etNickname.text
+        etNickname.visibility = View.GONE
         view.visibility = View.GONE
-        txtvEnteringNickname.visibility = View.VISIBLE
+        tvEnteringNickname.visibility = View.VISIBLE
 
         // Hide the keyboard.
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
