@@ -7,4 +7,7 @@
     <string name="strBox5">Box Five</string>
     <string name="strLabelToDo">How to play</string>
     <string name="strInfo">Tap the screen and buttons</string>
+    <string name="strRed">RED</string>
+    <string name="strGreen">GREEN</string>
+    <string name="strBlue">BLUE</string>
 </resources>

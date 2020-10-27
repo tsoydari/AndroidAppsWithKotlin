@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/tvBox"
-    android:background="@android:color/darker_gray"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/darker_gray"
     tools:context=".MainActivity">
 
     <TextView
@@ -27,8 +27,8 @@
         style="@style/WhiteBox"
         android:layout_width="130dp"
         android:layout_height="130dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="@dimen/marginWide"
+        android:layout_marginTop="@dimen/marginWide"
         android:text="@string/strBox2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvBoxOne" />
@@ -38,8 +38,8 @@
         style="@style/WhiteBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="@dimen/marginWide"
+        android:layout_marginEnd="@dimen/marginWide"
         android:text="@string/strBox3"
         app:layout_constraintBottom_toTopOf="@+id/tvBoxFour"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,10 +51,10 @@
         style="@style/WhiteBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="@dimen/marginWide"
+        android:layout_marginTop="@dimen/marginWide"
+        android:layout_marginEnd="@dimen/marginWide"
+        android:layout_marginBottom="@dimen/marginWide"
         android:text="@string/strBox4"
         app:layout_constraintBottom_toTopOf="@+id/tvBoxFive"
         app:layout_constraintEnd_toEndOf="parent"
@@ -66,8 +66,8 @@
         style="@style/WhiteBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="@dimen/marginWide"
+        android:layout_marginEnd="@dimen/marginWide"
         android:text="@string/strBox5"
         app:layout_constraintBottom_toBottomOf="@+id/tvBoxTwo"
         app:layout_constraintEnd_toEndOf="parent"
@@ -82,16 +82,16 @@
         android:text="@string/strLabelToDo"
         android:textSize="@dimen/sizeTextBox"
         app:layout_constraintBaseline_toBaselineOf="@+id/tvInfo"
-        tools:layout_editor_absoluteX="16dp" />
+        tools:layout_editor_absoluteX="@dimen/marginWide" />
 
     <TextView
         android:id="@+id/tvInfo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="@dimen/marginWide"
+        android:layout_marginTop="@dimen/marginWide"
+        android:layout_marginEnd="@dimen/marginWide"
+        android:layout_marginBottom="@dimen/marginWide"
         android:text="@string/strInfo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -99,5 +99,47 @@
         app:layout_constraintStart_toEndOf="@+id/tvLabel"
         app:layout_constraintTop_toBottomOf="@+id/tvBoxTwo"
         app:layout_constraintVertical_bias="0.096" />
+
+    <Button
+        android:id="@+id/btnRed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/marginWide"
+        android:layout_marginEnd="@dimen/marginWide"
+        android:text="@string/strRed"
+        app:backgroundTint="@color/redBtn"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btnGreen"
+        app:layout_constraintEnd_toStartOf="@+id/btnGreen"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnGreen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/marginWide"
+        android:layout_marginEnd="@dimen/marginWide"
+        android:layout_marginBottom="@dimen/marginWide"
+        android:text="@string/strGreen"
+        app:backgroundTint="@color/greenBtn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnBlue"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btnRed"
+        app:layout_constraintTop_toBottomOf="@+id/tvInfo"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/btnBlue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/marginWide"
+        android:layout_marginEnd="@dimen/marginWide"
+        android:text="@string/strBlue"
+        app:backgroundTint="@color/blueBtn"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btnGreen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btnGreen" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
