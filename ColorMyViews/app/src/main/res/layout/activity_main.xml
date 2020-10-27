@@ -8,6 +8,7 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/tvBoxOne"
         style="@style/WhiteBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -15,9 +16,61 @@
         android:layout_marginTop="@dimen/marginWide"
         android:layout_marginRight="@dimen/marginWide"
         android:fontFamily="@font/roboto"
-        android:text="@string/strBoxText"
+        android:text="@string/strBox"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvBoxTwo"
+        style="@style/WhiteBox"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/strBox2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvBoxOne" />
+
+    <TextView
+        android:id="@+id/tvBoxThree"
+        style="@style/WhiteBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/strBox3"
+        app:layout_constraintBottom_toTopOf="@+id/tvBoxFour"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvBoxTwo"
+        app:layout_constraintTop_toTopOf="@+id/tvBoxTwo" />
+
+    <TextView
+        android:id="@+id/tvBoxFour"
+        style="@style/WhiteBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/strBox4"
+        app:layout_constraintBottom_toTopOf="@+id/tvBoxFive"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvBoxTwo"
+        app:layout_constraintTop_toBottomOf="@+id/tvBoxThree" />
+
+    <TextView
+        android:id="@+id/tvBoxFive"
+        style="@style/WhiteBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/strBox5"
+        app:layout_constraintBottom_toBottomOf="@+id/tvBoxTwo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvBoxTwo"
+        app:layout_constraintTop_toBottomOf="@+id/tvBoxFour" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
