@@ -45,6 +45,11 @@ android {
     }
 }
 
+//Kotlin Android Extensions
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
