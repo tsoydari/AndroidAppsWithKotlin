@@ -21,16 +21,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        @Suppress("UNUSED_VARIABLE")
-        setContentView(R.layout.activity_main)
-        val navController = this.findNavController(R.id.navHostFragment)
+        val navController = findNavController(R.id.navHostFragment)
         NavigationUI.setupActionBarWithNavController(this, navController)
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return this.findNavController(R.id.navHostFragment).navigateUp()
+        return findNavController(R.id.navHostFragment).navigateUp()
     }
 }

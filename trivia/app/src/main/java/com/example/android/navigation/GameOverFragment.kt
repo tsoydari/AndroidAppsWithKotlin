@@ -25,9 +25,12 @@ import kotlinx.android.synthetic.main.fragment_game_over.*
 class GameOverFragment : Fragment(R.layout.fragment_game_over) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tryAgainButton.setOnClickListener{view: View ->
-            view.findNavController().navigate(R.id.action_gameOverFragment_to_gameFragment)
+        onClickCreated()
+    }
 
+    private  fun onClickCreated() {
+        tryAgainButton.setOnClickListener{
+            requireView().findNavController().navigate(R.id.action_gameOverFragment_to_gameFragment)
         }
     }
 }

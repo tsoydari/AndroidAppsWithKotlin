@@ -17,15 +17,14 @@
 package com.example.android.navigation
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_game.*
 
 class GameFragment : Fragment(R.layout.fragment_game) {
+
     data class Question(
             val text: String,
             val answers: List<String>)
@@ -56,43 +55,15 @@ class GameFragment : Fragment(R.layout.fragment_game) {
                     answers = listOf("<layout>", "<binding>", "<data-binding>", "<dbinding>"))
     )
 
-    lateinit var currentQuestion: Question
-    lateinit var answers: MutableList<String>
+    var currentQuestion: Question = Question("", listOf())
+    var answers: MutableList<String> = mutableListOf()
     private var questionIndex = 0
     private val numQuestions = Math.min((questions.size + 1) / 2, 3)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         randomizeQuestions()
-        submitButton.setOnClickListener @Suppress("UNUSED_ANONYMOUS_PARAMETER") {
-            view: View ->
-            val checkedId = questionRadioGroup.checkedRadioButtonId
-            // Do nothing if nothing is checked (id == -1)
-            if (-1 != checkedId) {
-                var answerIndex = 0
-                when (checkedId) {
-                    R.id.secondAnswerRadioButton -> answerIndex = 1
-                    R.id.thirdAnswerRadioButton -> answerIndex = 2
-                    R.id.fourthAnswerRadioButton -> answerIndex = 3
-                }
-                // The first answer in the original question is always the correct one, so if our
-                // answer matches, we have the correct answer.
-                if (answers[answerIndex] == currentQuestion.answers[0]) {
-                    questionIndex++
-                    // Advance to the next question
-                    if (questionIndex < numQuestions) {
-                        currentQuestion = questions[questionIndex]
-                        setQuestion()
-                    } else {
-                        // We've won!  Navigate to the gameWonFragment.
-                        view.findNavController().navigate(R.id.action_gameFragment_to_gameOverFragment)
-                    }
-                } else {
-                    // Game over! A wrong answer sends us to the gameOverFragment.
-                    view.findNavController().navigate(R.id.action_gameFragment_to_gameOverFragment)
-                }
-            }
-        }
+        onClickCreated()
     }
 
     // randomize the questions and set the first question
@@ -110,11 +81,42 @@ class GameFragment : Fragment(R.layout.fragment_game) {
         answers = currentQuestion.answers.toMutableList()
         // and shuffle them
         answers.shuffle()
-        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.title_android_trivia_question, questionIndex + 1, numQuestions)
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = getString(R.string.title_android_trivia_question, questionIndex + 1, numQuestions)
         firstAnswerRadioButton.text = answers[0]
         secondAnswerRadioButton.text = answers[1]
         thirdAnswerRadioButton.text = answers[2]
         fourthAnswerRadioButton.text = answers[3]
         questionText.text = currentQuestion.text
+    }
+
+    private fun onClickCreated() {
+        submitButton.setOnClickListener {
+            val checkedId = questionRadioGroup.checkedRadioButtonId
+            // Do nothing if nothing is checked (id == -1)
+            if (-1 != checkedId) {
+                var answerIndex = when (checkedId) {
+                    R.id.secondAnswerRadioButton -> 1
+                    R.id.thirdAnswerRadioButton -> 2
+                    R.id.fourthAnswerRadioButton -> 3
+                    else -> 0
+                }
+                // The first answer in the original question is always the correct one, so if our
+                // answer matches, we have the correct answer.
+                if (answers[answerIndex] == currentQuestion.answers[0]) {
+                    questionIndex++
+                    // Advance to the next question
+                    if (questionIndex < numQuestions) {
+                        currentQuestion = questions[questionIndex]
+                        setQuestion()
+                    } else {
+                        // We've won!  Navigate to the gameWonFragment.
+                        findNavController().navigate(R.id.action_gameFragment_to_gameOverFragment)
+                    }
+                } else {
+                    // Game over! A wrong answer sends us to the gameOverFragment.
+                    findNavController().navigate(R.id.action_gameFragment_to_gameOverFragment)
+                }
+            }
+        }
     }
 }
