@@ -30,7 +30,7 @@ class GameOverFragment : Fragment(R.layout.fragment_game_over) {
 
     private  fun onClickCreated() {
         tryAgainButton.setOnClickListener{
-            requireView().findNavController().navigate(R.id.action_gameOverFragment_to_gameFragment)
+            requireView().findNavController().navigate(GameOverFragmentDirections.actionGameOverFragmentToGameFragment())
         }
     }
 }
