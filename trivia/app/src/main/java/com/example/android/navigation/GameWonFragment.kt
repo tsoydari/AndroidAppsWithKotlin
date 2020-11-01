@@ -16,12 +16,17 @@
 
 package com.example.android.navigation
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import kotlinx.android.synthetic.main.fragment_game_over.*
 import kotlinx.android.synthetic.main.fragment_game_won.*
 
 class GameWonFragment : Fragment(R.layout.fragment_game_won) {
@@ -29,13 +34,48 @@ class GameWonFragment : Fragment(R.layout.fragment_game_won) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         onClickCreated()
-        var args = GameWonFragmentArgs.fromBundle(arguments as Bundle)
-        Toast.makeText(context, "NumCorrect: ${args.numCorrect}, NumQuestions: ${args.numQuestions}", Toast.LENGTH_LONG).show()
+//        var args = GameWonFragmentArgs.fromBundle(arguments as Bundle)
+//        Toast.makeText(context, "NumCorrect: ${args.numCorrect}, NumQuestions: ${args.numQuestions}", Toast.LENGTH_LONG).show()
+        setHasOptionsMenu(true)
     }
 
-    private  fun onClickCreated() {
-        nextMatchButton.setOnClickListener{
+    private fun onClickCreated() {
+        nextMatchButton.setOnClickListener {
             requireView().findNavController().navigate(GameWonFragmentDirections.actionGameWonFragmentToGameFragment())
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.winner_menu, menu)
+        if (null == getShareInten().resolveActivity(requireActivity().packageManager)) {
+            menu.findItem(R.id.share).setVisible(false)
+        }
+
+    }
+
+    private fun getShareInten(): Intent {
+        var args = GameWonFragmentArgs.fromBundle(arguments as Bundle)
+        return ShareCompat.IntentBuilder.from(activity as Activity)
+                .setText(getString(R.string.share_success_text, args.numCorrect, args.numQuestions))
+                .setType("text/plain")
+                .intent
+
+//        val shareIntent = Intent(Intent.ACTION_SEND)
+//        shareIntent.setType("text/plain")
+//                .putExtra(Intent.EXTRA_TEXT,
+//                getString(R.string.share_success_text, args.numCorrect, args.numQuestions))
+//        return shareIntent
+    }
+
+    private  fun shareSuccess() {
+        startActivity(getShareInten())
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.share -> shareSuccess()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
