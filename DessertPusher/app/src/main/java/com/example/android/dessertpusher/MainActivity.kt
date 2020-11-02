@@ -26,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ShareCompat
 import androidx.lifecycle.LifecycleObserver
 import kotlinx.android.synthetic.main.activity_main.*
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity(R.layout.activity_main), LifecycleObserver {
 
@@ -62,7 +63,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), LifecycleObserve
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Log.i("MainActivity", "onCreate called")
+        Timber.i("onCreate called")
 
         dessert_button.setOnClickListener {
             onDessertClicked()
@@ -152,6 +153,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), LifecycleObserve
 
     override fun onStart() {
         super.onStart()
-        Log.i("MainACtivity", "onStart called")
+        Timber.i("onStart called")
     }
 }
