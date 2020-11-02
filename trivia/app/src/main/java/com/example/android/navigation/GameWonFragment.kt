@@ -19,6 +19,7 @@ package com.example.android.navigation
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -27,19 +28,23 @@ import android.widget.Toast
 import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import kotlinx.android.synthetic.main.fragment_game_won.*
 
 class GameWonFragment : Fragment(R.layout.fragment_game_won) {
+    val args: GameWonFragmentArgs by navArgs<GameWonFragmentArgs>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        onClickCreated()
-//        var args = GameWonFragmentArgs.fromBundle(arguments as Bundle)
-//        Toast.makeText(context, "NumCorrect: ${args.numCorrect}, NumQuestions: ${args.numQuestions}", Toast.LENGTH_LONG).show()
         setHasOptionsMenu(true)
+        onClickCreated()
+        Log.d("test", args.numCorrect.toString())
+        Toast.makeText(requireContext(), "NumCorrect: ${args.numCorrect}, NumQuestions: ${args.numQuestions}", Toast.LENGTH_LONG).show()
+
     }
 
     private fun onClickCreated() {
+        Toast.makeText(requireContext(), "NumCorrect: ${args.numCorrect}, NumQuestions: ${args.numQuestions}", Toast.LENGTH_LONG).show()
         nextMatchButton.setOnClickListener {
             requireView().findNavController().navigate(GameWonFragmentDirections.actionGameWonFragmentToGameFragment())
         }
