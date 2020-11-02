@@ -20,23 +20,31 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
-    private lateinit var drawerLayoutActivity: DrawerLayout
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //drawerLayoutActivity = drawerLayout
         val navController = findNavController(R.id.navHostFragment)
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
+        navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, args ->
+            if (nd.id == nc.graph.startDestination) {
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+            } else {
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+            }
+        }
         NavigationUI.setupWithNavController(nawView, navController)
     }
 
     override fun onSupportNavigateUp(): Boolean {
 //        return findNavController(R.id.navHostFragment).navigateUp()
-        return NavigationUI.navigateUp(findNavController(R.id.navHostFragment), drawerLayout) ||
-                findNavController(R.id.navHostFragment).navigateUp()
+//        return NavigationUI.navigateUp(findNavController(R.id.navHostFragment), drawerLayout) ||
+//                findNavController(R.id.navHostFragment).navigateUp()
+        return NavigationUI.navigateUp(findNavController(R.id.navHostFragment), drawerLayout)
     }
 }

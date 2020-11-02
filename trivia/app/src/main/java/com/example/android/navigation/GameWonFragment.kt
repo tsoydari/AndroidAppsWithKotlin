@@ -38,13 +38,11 @@ class GameWonFragment : Fragment(R.layout.fragment_game_won) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
         onClickCreated()
-        Log.d("test", args.numCorrect.toString())
         Toast.makeText(requireContext(), "NumCorrect: ${args.numCorrect}, NumQuestions: ${args.numQuestions}", Toast.LENGTH_LONG).show()
 
     }
 
     private fun onClickCreated() {
-        Toast.makeText(requireContext(), "NumCorrect: ${args.numCorrect}, NumQuestions: ${args.numQuestions}", Toast.LENGTH_LONG).show()
         nextMatchButton.setOnClickListener {
             requireView().findNavController().navigate(GameWonFragmentDirections.actionGameWonFragmentToGameFragment())
         }
