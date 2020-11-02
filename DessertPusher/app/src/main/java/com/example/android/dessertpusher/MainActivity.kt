@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), LifecycleObserve
 
     private var revenue = 0
     private var dessertsSold = 0
+    private lateinit var dessertTimer : DessertTimer
 
     /** Dessert Data **/
 
@@ -69,6 +70,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), LifecycleObserve
             onDessertClicked()
         }
 
+        dessertTimer = DessertTimer()
+
         // Set the TextViews to the right values
 //        revenue = revenue
 //        amountSold = dessertsSold
@@ -92,6 +95,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), LifecycleObserve
 
     override fun onStart() {
         super.onStart()
+        dessertTimer.startTimer()
         Timber.i("onStart called")
     }
 
@@ -107,6 +111,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), LifecycleObserve
 
     override fun onStop() {
         super.onStop()
+        dessertTimer.stopTimer()
         Timber.i("onStop called")
     }
 
