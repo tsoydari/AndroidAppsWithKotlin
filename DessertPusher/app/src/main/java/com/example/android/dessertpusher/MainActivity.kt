@@ -18,6 +18,7 @@ package com.example.android.dessertpusher
 
 import android.content.ActivityNotFoundException
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -27,6 +28,9 @@ import androidx.core.app.ShareCompat
 import androidx.lifecycle.LifecycleObserver
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
+
+const val KEY_REVENUE = "key_revenue"
+const val KEY_SOLD = "key_dessertsSold"
 
 class MainActivity : AppCompatActivity(R.layout.activity_main), LifecycleObserver {
 
@@ -75,6 +79,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), LifecycleObserve
         // Set the TextViews to the right values
 //        revenue = revenue
 //        amountSold = dessertsSold
+
+        if (savedInstanceState != null) {
+            revenue = savedInstanceState.getInt(KEY_REVENUE)
+            dessertsSold = savedInstanceState.getInt(KEY_SOLD)
+        }
+
         onUpdateData()
 
         // Make sure the correct dessert is showing
@@ -116,6 +126,13 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), LifecycleObserve
     override fun onDestroy() {
         super.onDestroy()
         Timber.i("onDestroy called")
+    }
+
+    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
+        super.onSaveInstanceState(outState, outPersistentState)
+        Timber.i("onSaveInstanceState called")
+        outState.putInt(KEY_REVENUE, revenue)
+        outState.putInt(KEY_SOLD, dessertsSold)
     }
 
     private fun onUpdateData() {
