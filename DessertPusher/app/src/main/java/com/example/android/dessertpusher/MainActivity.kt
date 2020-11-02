@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), LifecycleObserve
             onDessertClicked()
         }
 
-        dessertTimer = DessertTimer()
+        dessertTimer = DessertTimer(lifecycle)
 
         // Set the TextViews to the right values
 //        revenue = revenue
@@ -95,7 +95,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), LifecycleObserve
 
     override fun onStart() {
         super.onStart()
-        dessertTimer.startTimer()
         Timber.i("onStart called")
     }
 
@@ -111,7 +110,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), LifecycleObserve
 
     override fun onStop() {
         super.onStop()
-        dessertTimer.stopTimer()
         Timber.i("onStop called")
     }
 
