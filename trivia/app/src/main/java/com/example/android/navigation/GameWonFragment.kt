@@ -39,13 +39,6 @@ class GameWonFragment : Fragment(R.layout.fragment_game_won) {
         setHasOptionsMenu(true)
         onClickCreated()
         Toast.makeText(requireContext(), "NumCorrect: ${args.numCorrect}, NumQuestions: ${args.numQuestions}", Toast.LENGTH_LONG).show()
-
-    }
-
-    private fun onClickCreated() {
-        nextMatchButton.setOnClickListener {
-            requireView().findNavController().navigate(GameWonFragmentDirections.actionGameWonFragmentToGameFragment())
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -54,25 +47,6 @@ class GameWonFragment : Fragment(R.layout.fragment_game_won) {
         if (null == getShareInten().resolveActivity(requireActivity().packageManager)) {
             menu.findItem(R.id.share).setVisible(false)
         }
-
-    }
-
-    private fun getShareInten(): Intent {
-        var args = GameWonFragmentArgs.fromBundle(arguments as Bundle)
-        return ShareCompat.IntentBuilder.from(activity as Activity)
-                .setText(getString(R.string.share_success_text, args.numCorrect, args.numQuestions))
-                .setType("text/plain")
-                .intent
-
-//        val shareIntent = Intent(Intent.ACTION_SEND)
-//        shareIntent.setType("text/plain")
-//                .putExtra(Intent.EXTRA_TEXT,
-//                getString(R.string.share_success_text, args.numCorrect, args.numQuestions))
-//        return shareIntent
-    }
-
-    private  fun shareSuccess() {
-        startActivity(getShareInten())
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -81,4 +55,23 @@ class GameWonFragment : Fragment(R.layout.fragment_game_won) {
         }
         return super.onOptionsItemSelected(item)
     }
+
+    private fun onClickCreated() {
+        nextMatchButton.setOnClickListener {
+            requireView().findNavController().navigate(GameWonFragmentDirections.actionGameWonFragmentToGameFragment())
+        }
+    }
+
+    private fun getShareInten(): Intent {
+        var args = GameWonFragmentArgs.fromBundle(arguments as Bundle)
+        return ShareCompat.IntentBuilder.from(activity as Activity)
+                .setText(getString(R.string.share_success_text, args.numCorrect, args.numQuestions))
+                .setType("text/plain")
+                .intent
+    }
+
+    private fun shareSuccess() {
+        startActivity(getShareInten())
+    }
+
 }
