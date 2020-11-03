@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), LifecycleObserve
 
     private var revenue = 0
     private var dessertsSold = 0
-    private lateinit var dessertTimer : DessertTimer
+    private val dessertTimer : DessertTimer by lazy { DessertTimer(lifecycle) }
 
     /** Dessert Data **/
 
@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), LifecycleObserve
             onDessertClicked()
         }
 
-        dessertTimer = DessertTimer(lifecycle)
+//        dessertTimer = DessertTimer(lifecycle)
 
         // Set the TextViews to the right values
 //        revenue = revenue
