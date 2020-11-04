@@ -51,6 +51,13 @@ class GameFragment : Fragment(R.layout.game_fragment) {
         viewModel.word.observe(viewLifecycleOwner, Observer { newWord ->
             word_text.text = newWord
         })
+
+        viewModel.eventGameFinish.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                gameFinished()
+                viewModel.onGameFinishComplete()
+            }
+        })
     }
 
     /**
@@ -60,5 +67,4 @@ class GameFragment : Fragment(R.layout.game_fragment) {
         val action = GameFragmentDirections.actionGameToScore(viewModel.score.value ?: 0)
         findNavController(this).navigate(action)
     }
-
 }
