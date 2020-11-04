@@ -19,6 +19,8 @@ package com.example.android.guesstheword.screens.game
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.example.android.guesstheword.R
 import kotlinx.android.synthetic.main.game_fragment.*
@@ -27,6 +29,8 @@ import kotlinx.android.synthetic.main.game_fragment.*
  * Fragment where the game is played
  */
 class GameFragment : Fragment(R.layout.game_fragment) {
+
+    private val viewModel : GameViewModel by lazy { ViewModelProviders.of(this).get(GameViewModel::class.java) }
 
     // The current word
     private var word = ""
@@ -39,6 +43,7 @@ class GameFragment : Fragment(R.layout.game_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel
         resetList()
         nextWord()
 
