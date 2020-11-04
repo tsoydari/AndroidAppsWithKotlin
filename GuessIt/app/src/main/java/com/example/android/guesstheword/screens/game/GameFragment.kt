@@ -17,6 +17,7 @@
 package com.example.android.guesstheword.screens.game
 
 import android.os.Bundle
+import android.text.format.DateUtils
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -57,6 +58,10 @@ class GameFragment : Fragment(R.layout.game_fragment) {
                 gameFinished()
                 viewModel.onGameFinishComplete()
             }
+        })
+
+        viewModel.currentTime.observe(viewLifecycleOwner, Observer {newTime ->
+            timer_text.text = DateUtils.formatElapsedTime(newTime)
         })
     }
 
