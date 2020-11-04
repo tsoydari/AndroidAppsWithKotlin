@@ -19,6 +19,7 @@ package com.example.android.guesstheword.screens.game
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment.findNavController
@@ -38,33 +39,26 @@ class GameFragment : Fragment(R.layout.game_fragment) {
 
         correct_button.setOnClickListener {
             viewModel.onCorrect()
-            updateScoreText()
-            updateWordText()
         }
         skip_button.setOnClickListener {
             viewModel.onSkip()
-            updateScoreText()
-            updateWordText()
         }
-        updateScoreText()
-        updateWordText()
+
+        viewModel.score.observe(viewLifecycleOwner, Observer { newScore ->
+            score_text.text = newScore.toString()
+        })
+
+        viewModel.word.observe(viewLifecycleOwner, Observer { newWord ->
+            word_text.text = newWord
+        })
     }
 
     /**
      * Called when the game is finished
      */
     private fun gameFinished() {
-        val action = GameFragmentDirections.actionGameToScore(viewModel.score)
+        val action = GameFragmentDirections.actionGameToScore(viewModel.score.value ?: 0)
         findNavController(this).navigate(action)
     }
 
-    /** Methods for updating the UI **/
-
-    private fun updateWordText() {
-        word_text.text = viewModel.word
-    }
-
-    private fun updateScoreText() {
-        score_text.text = viewModel.score.toString()
-    }
 }
