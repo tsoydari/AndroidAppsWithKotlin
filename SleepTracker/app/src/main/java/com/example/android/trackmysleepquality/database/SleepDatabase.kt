@@ -22,8 +22,11 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(entities = [SleepNight::class], version = 1, exportSchema = false)
-abstract class SleepDatabase() : RoomDatabase() {
+abstract class SleepDatabase : RoomDatabase() {
 
+    /**
+     * Connects the database to the DAO.
+     */
     abstract val sleepDatabaseDao: SleepDatabaseDao
 
     companion object {
@@ -43,8 +46,10 @@ abstract class SleepDatabase() : RoomDatabase() {
                     )
                             .fallbackToDestructiveMigration()
                             .build()
+                    // Assign INSTANCE to the newly created database.
                     INSTANCE = instance
                 }
+                return instance
             }
         }
     }
