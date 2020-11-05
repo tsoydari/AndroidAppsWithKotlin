@@ -74,6 +74,10 @@ dependencies {
     // Kotlin Extensions and Coroutines support for Room
     implementation "androidx.room:room-ktx:$version_room"
 
+    // ViewModels
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
+    implementation 'androidx.fragment:fragment-ktx:1.2.5'
+
 
     // Testing
     testImplementation 'junit:junit:4.12'
