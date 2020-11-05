@@ -52,11 +52,13 @@ class GameFragment : Fragment(R.layout.game_fragment) {
 
     private fun initObservers() {
         viewModel.score.observe(viewLifecycleOwner, Observer { newScore ->
-            score_text.text = newScore.toString()
+//            score_text.text = newScore.toString()
+            score_text.text = getString(R.string.score_format, newScore)
         })
 
         viewModel.word.observe(viewLifecycleOwner, Observer { newWord ->
-            word_text.text = newWord
+//            word_text.text = newWord
+            word_text.text = getString(R.string.quote_format, newWord)
         })
 
         viewModel.eventGameFinish.observe(viewLifecycleOwner, Observer {
