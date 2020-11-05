@@ -46,7 +46,7 @@
             app:launchSingleTop="true"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left"
-            app:popUpTo="@+id/title_destination" />
+            app:popUpTo="@id/title_destination" />
     </fragment>
     <fragment
         android:id="@+id/score_destination"
@@ -55,15 +55,18 @@
         tools:layout="@layout/score_fragment">
         <action
             android:id="@+id/action_restart"
-            app:destination="@+id/game_destination"
+            app:destination="@+id/title_destination"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left"
-            app:popUpTo="@+id/title_destination" />
+            app:popExitAnim="@anim/slide_out_left" />
         <argument
             android:name="score"
             android:defaultValue="0"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_score_destination_to_game_destination"
+            app:destination="@id/game_destination"
+            app:popUpTo="@id/title_destination" />
     </fragment>
 </navigation>

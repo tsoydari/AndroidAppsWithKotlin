@@ -37,13 +37,24 @@ class ScoreFragment : Fragment(R.layout.score_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initListeners()
+        initObservers()
+    }
+
+    private fun initListeners() {
+        play_again_button.setOnClickListener { viewModel.onPlayAgain() }
+    }
+
+    private fun initObservers() {
         viewModel.score.observe(viewLifecycleOwner, Observer { newScore ->
             score_text.text = newScore.toString()
         })
-        play_again_button.setOnClickListener { onPlayAgain() }
-    }
 
-    private fun onPlayAgain() {
-        findNavController().navigate(ScoreFragmentDirections.actionRestart())
+        viewModel.eventPlayAgain.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                findNavController().navigate(ScoreFragmentDirections.actionRestart())
+                viewModel.onPlayAgainComplete()
+            }
+        })
     }
 }
