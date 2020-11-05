@@ -20,6 +20,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.example.android.trackmysleepquality.R
@@ -33,17 +34,33 @@ import kotlinx.android.synthetic.main.fragment_sleep_tracker.*
  */
 class SleepTrackerFragment : Fragment(R.layout.fragment_sleep_tracker) {
 
+    private val application by lazy{ requireNotNull(activity).application }
+
+    private val dataSource by lazy{ SleepDatabase.getInstance(application).sleepDatabaseDao }
+
+    private val sleepTrackerViewModel: SleepTrackerViewModel by viewModels { SleepTrackerViewModelFactory(dataSource, application)}
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val application = requireNotNull(activity).application
+        initListeners()
+        initObservers()
 
-        val dataSource = SleepDatabase.getInstance(application).sleepDatabaseDao
+//        val application = requireNotNull(activity).application
+//        val dataSource = SleepDatabase.getInstance(application).sleepDatabaseDao
+//        val viewModelFactory = SleepTrackerViewModelFactory(dataSource, application)
+//        val sleepTrackerViewModel = ViewModelProviders.of(this,viewModelFactory).get(SleepTrackerViewModel::class.java)
+    }
 
-        val viewModelFactory = SleepTrackerViewModelFactory(dataSource, application)
+    private fun initListeners() {
+        start_button.setOnClickListener { sleepTrackerViewModel.onStartTracking() }
+        stop_button.setOnClickListener { sleepTrackerViewModel.onStopTracking() }
+        clear_button.setOnClickListener { sleepTrackerViewModel.onClear() }
+    }
 
-        //val sleepTrackerViewModel: SleepTrackerViewModel by viewModels { SleepTrackerViewModelFactory(dataSource, application) }
-        val sleepTrackerViewModel = ViewModelProviders.of(this,viewModelFactory).get(SleepTrackerViewModel::class.java)
-
+    private fun initObservers() {
+        sleepTrackerViewModel.nightString.observe(viewLifecycleOwner, Observer { newNight ->
+            textview.text = newNight
+        })
     }
 }
