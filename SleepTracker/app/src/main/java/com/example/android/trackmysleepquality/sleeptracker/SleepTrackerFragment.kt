@@ -26,6 +26,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import com.example.android.trackmysleepquality.R
 import com.example.android.trackmysleepquality.database.SleepDatabase
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_sleep_tracker.*
 
 /**
@@ -47,11 +48,7 @@ class SleepTrackerFragment : Fragment(R.layout.fragment_sleep_tracker) {
         initListeners()
         initObservers()
 
-//        val application = requireNotNull(activity).application
-//        val dataSource = SleepDatabase.getInstance(application).sleepDatabaseDao
-//        val viewModelFactory = SleepTrackerViewModelFactory(dataSource, application)
-//        val sleepTrackerViewModel = ViewModelProviders.of(this,viewModelFactory).get(SleepTrackerViewModel::class.java)
-    }
+   }
 
     private fun initListeners() {
         start_button.setOnClickListener { sleepTrackerViewModel.onStartTracking() }
@@ -71,5 +68,28 @@ class SleepTrackerFragment : Fragment(R.layout.fragment_sleep_tracker) {
                                 .actionSleepTrackerFragmentToSleepQualityFragment(night.nightId))
                 sleepTrackerViewModel.doneNavigating()
             } })
+
+        sleepTrackerViewModel.startButtonVisible.observe(viewLifecycleOwner, Observer {
+            start_button.setEnabled(it)
+        })
+
+        sleepTrackerViewModel.stopButtonVisible.observe(viewLifecycleOwner, Observer {
+            stop_button.setEnabled(it)
+        })
+
+        sleepTrackerViewModel.clearButtonVisible.observe(viewLifecycleOwner, Observer {
+            clear_button.setEnabled(it)
+        })
+
+        sleepTrackerViewModel.showSnackbarEvent.observe(viewLifecycleOwner, Observer {
+            if (it == true) { // Observed state is true.
+                Snackbar.make(
+                        requireActivity().findViewById(android.R.id.content),
+                        getString(R.string.cleared_message),
+                        Snackbar.LENGTH_SHORT // How long to display the message.
+                ).show()
+                sleepTrackerViewModel.doneShowingSnackbar()
+            }
+        })
     }
 }

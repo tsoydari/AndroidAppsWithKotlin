@@ -56,6 +56,7 @@
     <Button
         android:id="@+id/start_button"
         style="@style/SleepButtons"
+        android:enabled="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin"
@@ -68,6 +69,7 @@
     <Button
         android:id="@+id/stop_button"
         style="@style/SleepButtons"
+        android:enabled="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin"
@@ -80,6 +82,7 @@
     <Button
         android:id="@+id/clear_button"
         style="@style/SleepButtons"
+        android:enabled="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin"
