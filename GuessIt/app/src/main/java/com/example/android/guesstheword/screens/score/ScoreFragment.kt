@@ -19,6 +19,8 @@ package com.example.android.guesstheword.screens.score
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.android.guesstheword.R
@@ -29,10 +31,15 @@ import kotlinx.android.synthetic.main.score_fragment.*
  */
 class ScoreFragment : Fragment(R.layout.score_fragment) {
 
+    private val scoreFragmentArgs by navArgs<ScoreFragmentArgs>()
+    private val viewModel : ScoreViewModel by viewModels {ScoreViewModelFactory(scoreFragmentArgs.score)}
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val scoreFragmentArgs by navArgs<ScoreFragmentArgs>()
-        score_text.text = scoreFragmentArgs.score.toString()
+
+        viewModel.score.observe(viewLifecycleOwner, Observer { newScore ->
+            score_text.text = newScore.toString()
+        })
         play_again_button.setOnClickListener { onPlayAgain() }
     }
 

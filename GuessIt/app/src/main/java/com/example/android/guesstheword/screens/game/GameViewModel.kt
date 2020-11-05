@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class GameViewModel : ViewModel() {
+class GameViewModel() : ViewModel() {
 
     companion object {
         // These represent different important times
@@ -15,28 +15,20 @@ class GameViewModel : ViewModel() {
         // This is the number of milliseconds in a second
         const val ONE_SECOND = 1000L
         // This is the total time of the game
-        const val COUNTDOWN_TIME = 60000L
+        const val COUNTDOWN_TIME = 6000L
     }
 
     private val timer : CountDownTimer
 
-    private var _currentTime = MutableLiveData<Long>()
-    val currentTime : LiveData<Long>
-        get() = _currentTime
+    var currentTime = MutableLiveData<Long>()
 
     // The current word
-    private var _word = MutableLiveData<String>()
-    val word : LiveData<String>
-        get() = _word
+    var word = MutableLiveData<String>()
 
     // The current score
-    private var _score = MutableLiveData<Int>()
-    val score : LiveData<Int>
-        get() = _score
+    var score = MutableLiveData<Int>()
 
-    private var _eventGameFinish = MutableLiveData<Boolean>()
-    val eventGameFinish: LiveData<Boolean>
-        get() = _eventGameFinish
+    var eventGameFinish = MutableLiveData<Boolean>()
 
     // The list of words - the front of the list is the next word to guess
     private var wordList: MutableList<String> = mutableListOf()
@@ -45,18 +37,18 @@ class GameViewModel : ViewModel() {
         Log.i("GameViewModel", "GameViewModel created!")
         resetList()
         nextWord()
-        _score.value = 0
+        score.value = 0
         nextWord()
 //        _eventGameFinish.value = false
         timer = object : CountDownTimer(COUNTDOWN_TIME, ONE_SECOND) {
 
             override fun onTick(millisUntilFinished: Long) {
-                _currentTime.value = (millisUntilFinished / ONE_SECOND)
+                currentTime.value = (millisUntilFinished / ONE_SECOND)
             }
 
             override fun onFinish() {
-                _currentTime.value = DONE
-                _eventGameFinish.value = true
+                currentTime.value = DONE
+                eventGameFinish.value = true
             }
         }
         timer.start()
@@ -107,21 +99,21 @@ class GameViewModel : ViewModel() {
 //            _eventGameFinish.value = true
             resetList()
         }
-        _word.value = wordList.removeAt(0)
+        word.value = wordList.removeAt(0)
     }
 
     /** Methods for buttons presses **/
     fun onSkip() {
-        _score.value = (score.value)?.minus(1)
+        score.value = (score.value)?.minus(1)
         nextWord()
     }
 
     fun onCorrect() {
-        _score.value = (score.value)?.plus(1)
+        score.value = (score.value)?.plus(1)
         nextWord()
     }
 
     fun onGameFinishComplete() {
-        _eventGameFinish.value = false
+        eventGameFinish.value = false
     }
 }

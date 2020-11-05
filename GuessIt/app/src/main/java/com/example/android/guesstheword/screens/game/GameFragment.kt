@@ -20,9 +20,8 @@ import android.os.Bundle
 import android.text.format.DateUtils
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.example.android.guesstheword.R
 import kotlinx.android.synthetic.main.game_fragment.*
@@ -32,19 +31,26 @@ import kotlinx.android.synthetic.main.game_fragment.*
  */
 class GameFragment : Fragment(R.layout.game_fragment) {
 
-    private val viewModel : GameViewModel by lazy { ViewModelProviders.of(this).get(GameViewModel::class.java) }
+//    private val viewModel : GameViewModel by lazy { ViewModelProviders.of(this).get(GameViewModel::class.java) }
+    private val viewModel : GameViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel
+        initListeners()
+        initObservers()
+    }
 
+    private fun initListeners() {
         correct_button.setOnClickListener {
             viewModel.onCorrect()
         }
         skip_button.setOnClickListener {
             viewModel.onSkip()
         }
+    }
 
+    private fun initObservers() {
         viewModel.score.observe(viewLifecycleOwner, Observer { newScore ->
             score_text.text = newScore.toString()
         })
