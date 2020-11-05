@@ -23,6 +23,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import com.example.android.trackmysleepquality.R
 import com.example.android.trackmysleepquality.database.SleepDatabase
 import kotlinx.android.synthetic.main.fragment_sleep_tracker.*
@@ -62,5 +63,13 @@ class SleepTrackerFragment : Fragment(R.layout.fragment_sleep_tracker) {
         sleepTrackerViewModel.nightString.observe(viewLifecycleOwner, Observer { newNight ->
             textview.text = newNight
         })
+
+        sleepTrackerViewModel.navigateToSleepQuality.observe(viewLifecycleOwner, Observer { night ->
+            night?.let {
+                requireView().findNavController().navigate(
+                        SleepTrackerFragmentDirections
+                                .actionSleepTrackerFragmentToSleepQualityFragment(night.nightId))
+                sleepTrackerViewModel.doneNavigating()
+            } })
     }
 }

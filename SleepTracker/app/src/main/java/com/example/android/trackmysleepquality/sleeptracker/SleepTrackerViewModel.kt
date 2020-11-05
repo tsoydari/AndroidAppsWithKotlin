@@ -44,6 +44,8 @@ class SleepTrackerViewModel(
         formatNights(nights, application.resources)
     }
 
+    val navigateToSleepQuality = MutableLiveData<SleepNight>()
+
     init {
         initializeTonight()
     }
@@ -90,6 +92,7 @@ class SleepTrackerViewModel(
             val oldNight = tonight.value ?: return@launch
             oldNight.endTimeMilli = System.currentTimeMillis()
             update(oldNight)
+            navigateToSleepQuality.value = oldNight
         }
     }
 
@@ -110,6 +113,10 @@ class SleepTrackerViewModel(
         withContext(Dispatchers.IO) {
             database.clear()
         }
+    }
+
+    fun doneNavigating() {
+        navigateToSleepQuality.value = null
     }
 }
 
