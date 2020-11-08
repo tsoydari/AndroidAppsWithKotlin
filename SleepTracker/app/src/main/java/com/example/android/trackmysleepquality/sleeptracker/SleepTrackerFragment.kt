@@ -32,6 +32,8 @@ import kotlinx.android.synthetic.main.fragment_sleep_tracker.*
  * (Because we have not learned about RecyclerView yet.)
  */
 class SleepTrackerFragment : Fragment(R.layout.fragment_sleep_tracker) {
+
+    val adapter = SleepNightAdapter()
     private val sleepTrackerViewModel: SleepTrackerViewModel by viewModels {
         SleepTrackerViewModelFactory(requireActivity().application)
     }
@@ -50,7 +52,13 @@ class SleepTrackerFragment : Fragment(R.layout.fragment_sleep_tracker) {
 
     private fun initObservers() {
         sleepTrackerViewModel.nightString.observe(viewLifecycleOwner, Observer { newNight ->
-            textview.text = newNight
+//            textview.text = newNight
+        })
+
+        sleepTrackerViewModel.nights.observe(viewLifecycleOwner, Observer {
+            it?.run {
+                adapter.data = it
+            }
         })
 
         sleepTrackerViewModel.navigateToSleepQuality.observe(viewLifecycleOwner, Observer { night ->
