@@ -23,7 +23,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.example.android.trackmysleepquality.R
-import com.example.android.trackmysleepquality.database.SleepDatabase
 import kotlinx.android.synthetic.main.fragment_sleep_quality.*
 
 /**
@@ -34,28 +33,22 @@ import kotlinx.android.synthetic.main.fragment_sleep_quality.*
  */
 class SleepQualityFragment : Fragment(R.layout.fragment_sleep_quality) {
 
-    private val application by lazy{ requireNotNull(activity).application }
-
-    private val dataSource by lazy{ SleepDatabase.getInstance(application).sleepDatabaseDao }
-
-    private val arguments by lazy { SleepQualityFragmentArgs.fromBundle(requireArguments()) }
-
     private val sleepQualityViewModel: SleepQualityViewModel
             by viewModels {
-                SleepQualityViewModelFactory(arguments.sleepNightKey, dataSource) }
+                SleepQualityViewModelFactory(
+                        SleepQualityFragmentArgs.fromBundle(requireArguments()).sleepNightKey,
+                        requireActivity().application)
+            }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val application = requireNotNull(activity).application
-
         initObservers()
         initListeners()
     }
 
     private fun initObservers() {
         sleepQualityViewModel.navigateToSleepQuality.observe(viewLifecycleOwner, Observer {
-            if (it == true) { // Observed state is true.
+            if (it) { // Observed state is true.
                 requireView().findNavController().navigate(
                         SleepQualityFragmentDirections.actionSleepQualityFragmentToSleepTrackerFragment())
                 sleepQualityViewModel.doneNavigating()
@@ -70,7 +63,5 @@ class SleepQualityFragment : Fragment(R.layout.fragment_sleep_quality) {
         quality_three_image.setOnClickListener{sleepQualityViewModel.onSetSleepQuality(3)}
         quality_four_image.setOnClickListener{sleepQualityViewModel.onSetSleepQuality(4)}
         quality_five_image.setOnClickListener{sleepQualityViewModel.onSetSleepQuality(5)}
-
     }
-
 }

@@ -16,14 +16,18 @@
 
 package com.example.android.trackmysleepquality.sleepquality
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.example.android.trackmysleepquality.database.SleepDatabase
 import com.example.android.trackmysleepquality.database.SleepDatabaseDao
 import kotlinx.coroutines.*
 
 class SleepQualityViewModel(
         private val sleepNightKey: Long = 0L,
-        val database: SleepDatabaseDao) : ViewModel() {
+        application: Application) : AndroidViewModel(application) {
+
+    private val database: SleepDatabaseDao by lazy{ SleepDatabase.getInstance(application).sleepDatabaseDao }
 
     private val viewModelJob = Job()
 

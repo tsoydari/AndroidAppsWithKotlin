@@ -21,11 +21,8 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import com.example.android.trackmysleepquality.R
-import com.example.android.trackmysleepquality.database.SleepDatabase
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_sleep_tracker.*
 
@@ -35,19 +32,14 @@ import kotlinx.android.synthetic.main.fragment_sleep_tracker.*
  * (Because we have not learned about RecyclerView yet.)
  */
 class SleepTrackerFragment : Fragment(R.layout.fragment_sleep_tracker) {
-
-    private val application by lazy{ requireNotNull(activity).application }
-
-    private val dataSource by lazy{ SleepDatabase.getInstance(application).sleepDatabaseDao }
-
-    private val sleepTrackerViewModel: SleepTrackerViewModel by viewModels { SleepTrackerViewModelFactory(dataSource, application)}
+    private val sleepTrackerViewModel: SleepTrackerViewModel by viewModels {
+        SleepTrackerViewModelFactory(requireActivity().application)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initListeners()
         initObservers()
-
    }
 
     private fun initListeners() {
@@ -62,7 +54,7 @@ class SleepTrackerFragment : Fragment(R.layout.fragment_sleep_tracker) {
         })
 
         sleepTrackerViewModel.navigateToSleepQuality.observe(viewLifecycleOwner, Observer { night ->
-            night?.let {
+            night?.run {
                 requireView().findNavController().navigate(
                         SleepTrackerFragmentDirections
                                 .actionSleepTrackerFragmentToSleepQualityFragment(night.nightId))
@@ -82,7 +74,7 @@ class SleepTrackerFragment : Fragment(R.layout.fragment_sleep_tracker) {
         })
 
         sleepTrackerViewModel.showSnackbarEvent.observe(viewLifecycleOwner, Observer {
-            if (it == true) { // Observed state is true.
+            if (it) { // Observed state is true.
                 Snackbar.make(
                         requireActivity().findViewById(android.R.id.content),
                         getString(R.string.cleared_message),

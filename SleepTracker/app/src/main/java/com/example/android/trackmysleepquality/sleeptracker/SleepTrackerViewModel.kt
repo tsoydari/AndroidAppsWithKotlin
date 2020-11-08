@@ -20,7 +20,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import com.example.android.trackmysleepquality.database.SleepDatabaseDao
+import com.example.android.trackmysleepquality.database.SleepDatabase
 import com.example.android.trackmysleepquality.database.SleepNight
 import com.example.android.trackmysleepquality.formatNights
 import kotlinx.coroutines.*
@@ -29,8 +29,9 @@ import kotlinx.coroutines.*
  * ViewModel for SleepTrackerFragment.
  */
 class SleepTrackerViewModel(
-        val database: SleepDatabaseDao,
         application: Application) : AndroidViewModel(application) {
+
+    private val database by lazy{ SleepDatabase.getInstance(application).sleepDatabaseDao }
 
     private var viewModelJob = Job()
 
@@ -75,11 +76,10 @@ class SleepTrackerViewModel(
 
     private suspend fun getTonightFromDatabase(): SleepNight? {
         return withContext(Dispatchers.IO) {
-            var night = database.getTonight()
-            if (night?.endTimeMilli != night?.startTimeMilli) {
-                night = null
+            database.getTonight()?.let {
+                if (it.endTimeMilli != it.startTimeMilli) null
+                else it
             }
-            night
         }
     }
 
