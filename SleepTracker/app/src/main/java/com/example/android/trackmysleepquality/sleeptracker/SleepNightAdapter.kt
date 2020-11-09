@@ -28,13 +28,13 @@ class SleepNightAdapter: ListAdapter<SleepNight, SleepNightAdapter.ViewHolder>(S
 
     class ViewHolder private constructor(itemView: View): RecyclerView.ViewHolder(itemView) {
 
-        val sleepLength: TextView = itemView.findViewById(R.id.tvSleepLength)
+//        val sleepLength: TextView = itemView.findViewById(R.id.tvSleepLength)
         val quality: TextView = itemView.findViewById(R.id.tvQuality)
         val qualityImage: ImageView = itemView.findViewById(R.id.ivQuality)
 
         fun bind(item: SleepNight) {
             val res = itemView.context.resources
-            sleepLength.text = convertDurationToFormatted(item.startTimeMilli, item.endTimeMilli, res)
+//            sleepLength.text = convertDurationToFormatted(item.startTimeMilli, item.endTimeMilli, res)
             quality.text = convertNumericQualityToString(item.sleepQuality, res)
 
             qualityImage.setImageResource(when (item.sleepQuality) {
