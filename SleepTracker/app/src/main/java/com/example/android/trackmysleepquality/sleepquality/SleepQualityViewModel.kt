@@ -27,7 +27,7 @@ class SleepQualityViewModel(
         private val sleepNightKey: Long = 0L,
         application: Application) : AndroidViewModel(application) {
 
-    private val database: SleepDatabaseDao by lazy{ SleepDatabase.getInstance(application).sleepDatabaseDao }
+    private val database: SleepDatabaseDao by lazy(Dispatchers.IO) { SleepDatabase.getInstance(application).sleepDatabaseDao }
 
     private val viewModelJob = Job()
 

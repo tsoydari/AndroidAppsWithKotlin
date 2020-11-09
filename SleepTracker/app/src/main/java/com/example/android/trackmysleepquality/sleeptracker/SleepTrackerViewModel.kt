@@ -31,7 +31,7 @@ import kotlinx.coroutines.*
 class SleepTrackerViewModel(
         application: Application) : AndroidViewModel(application) {
 
-    private val database by lazy{ SleepDatabase.getInstance(application).sleepDatabaseDao }
+    private val database by lazy(Dispatchers.IO){ SleepDatabase.getInstance(application).sleepDatabaseDao }
 
     private var viewModelJob = Job()
 
