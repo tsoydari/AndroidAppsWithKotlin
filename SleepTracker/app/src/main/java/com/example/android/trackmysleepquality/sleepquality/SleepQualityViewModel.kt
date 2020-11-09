@@ -33,7 +33,7 @@ class SleepQualityViewModel(
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    val navigateToSleepQuality = MutableLiveData<Boolean>()
+    val navigateToSleepQuality = MutableLiveData<Boolean>(false)
 
     override fun onCleared() {
         super.onCleared()
@@ -52,6 +52,6 @@ class SleepQualityViewModel(
     }
 
     fun doneNavigating() {
-        navigateToSleepQuality.value = null
+        navigateToSleepQuality.value = false
     }
 }

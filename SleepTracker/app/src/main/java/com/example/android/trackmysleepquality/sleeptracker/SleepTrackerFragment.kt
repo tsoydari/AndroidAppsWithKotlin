@@ -42,6 +42,7 @@ class SleepTrackerFragment : Fragment(R.layout.fragment_sleep_tracker) {
         super.onViewCreated(view, savedInstanceState)
         initListeners()
         initObservers()
+        rvSleepList.adapter = adapter
    }
 
     private fun initListeners() {
