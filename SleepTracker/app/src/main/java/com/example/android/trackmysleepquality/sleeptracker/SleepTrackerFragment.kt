@@ -34,7 +34,10 @@ import kotlinx.android.synthetic.main.fragment_sleep_tracker.*
  */
 class SleepTrackerFragment : Fragment(R.layout.fragment_sleep_tracker) {
 
+    val manager by lazy { GridLayoutManager(requireActivity(), 3) }
+
     val adapter = SleepNightAdapter()
+
     private val sleepTrackerViewModel: SleepTrackerViewModel by viewModels {
         SleepTrackerViewModelFactory(requireActivity().application)
     }
@@ -44,7 +47,13 @@ class SleepTrackerFragment : Fragment(R.layout.fragment_sleep_tracker) {
         initListeners()
         initObservers()
         rvSleepList.adapter = adapter
-        rvSleepList.layoutManager = GridLayoutManager(requireActivity(), 3)
+        manager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int) =  when (position) {
+                0 -> 3
+                else -> 1
+            }
+        }
+        rvSleepList.layoutManager = manager
    }
 
     private fun initListeners() {
