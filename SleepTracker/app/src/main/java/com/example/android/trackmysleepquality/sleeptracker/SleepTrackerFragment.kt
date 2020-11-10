@@ -26,7 +26,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.android.trackmysleepquality.R
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_sleep_tracker.*
-import kotlinx.android.synthetic.main.list_item_sleep_night.*
 
 /**
  * A fragment with buttons to record start and end times for sleep, which are saved in
@@ -55,10 +54,6 @@ class SleepTrackerFragment : Fragment(R.layout.fragment_sleep_tracker) {
     }
 
     private fun initObservers() {
-        sleepTrackerViewModel.nightString.observe(viewLifecycleOwner, Observer { newNight ->
-//            textview.text = newNight
-        })
-
         sleepTrackerViewModel.nights.observe(viewLifecycleOwner, Observer {
             it?.run {
                 adapter.submitList(it)
