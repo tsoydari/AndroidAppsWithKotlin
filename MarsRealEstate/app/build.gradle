@@ -79,9 +79,10 @@ dependencies {
     
     // Retrofit - Deprecated plugins - No more required
      implementation "com.squareup.retrofit2:retrofit:$version_retrofit"
-     implementation "com.squareup.retrofit2:converter-scalars:$version_retrofit"
 
     // Retrofit with Moshi Converter
+    implementation "com.squareup.moshi:moshi:$version_moshi"
+    implementation "com.squareup.moshi:moshi-kotlin:$version_moshi"
     implementation "com.squareup.retrofit2:converter-moshi:$version_retrofit"
 
     // Coroutines - Deprecated - No more required

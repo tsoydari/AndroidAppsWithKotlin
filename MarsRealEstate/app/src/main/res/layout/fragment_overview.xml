@@ -25,6 +25,7 @@
     tools:context="com.example.android.marsrealestate.MainActivity">
 
     <TextView
+        android:id="@+id/tvResponse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

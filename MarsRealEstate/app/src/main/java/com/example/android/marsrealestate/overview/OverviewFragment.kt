@@ -21,7 +21,9 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.example.android.marsrealestate.R
+import kotlinx.android.synthetic.main.fragment_overview.*
 
 /**
  * This fragment shows the the status of the Mars real-estate web services transaction.
@@ -33,10 +35,17 @@ class OverviewFragment : Fragment(R.layout.fragment_overview) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
+        initObservers()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.overflow_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    private fun initObservers() {
+        viewModel.response.observe(viewLifecycleOwner, Observer {
+            tvResponse.text = it
+        })
     }
 }
