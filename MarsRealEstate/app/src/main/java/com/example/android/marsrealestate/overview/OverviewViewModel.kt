@@ -20,6 +20,7 @@ package com.example.android.marsrealestate.overview
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.android.marsrealestate.network.MarsApi
+import com.example.android.marsrealestate.network.MarsApiStatus
 import com.example.android.marsrealestate.network.MarsProperty
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,13 +28,12 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import retrofit2.await
 
-enum class MarsApiStatus { LOADING, ERROR, DONE }
-
 class OverviewViewModel : ViewModel() {
 
     // The MutableLiveData String that stores the status of the most recent request
-    val status = MutableLiveData<MarsApiStatus>()
+    val status = MutableLiveData<MarsApiStatus?>(MarsApiStatus.LOADING)
     val properties = MutableLiveData<List<MarsProperty>>()
+    val navigateToSelectedProperty = MutableLiveData<MarsProperty>()
     private val viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Default)
 
@@ -60,5 +60,13 @@ class OverviewViewModel : ViewModel() {
                 status.postValue(MarsApiStatus.ERROR)
             }
         }
+    }
+
+    fun displayPropertyDetails(marsProperty: MarsProperty) {
+        navigateToSelectedProperty.postValue(marsProperty)
+    }
+
+    fun displayPropertyDetailsComplete() {
+        navigateToSelectedProperty.postValue(null)
     }
 }

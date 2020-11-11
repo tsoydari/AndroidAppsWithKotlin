@@ -22,7 +22,9 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import com.example.android.marsrealestate.R
+import com.example.android.marsrealestate.network.MarsApiStatus
 import kotlinx.android.synthetic.main.fragment_overview.*
 
 /**
@@ -32,7 +34,9 @@ class OverviewFragment : Fragment(R.layout.fragment_overview) {
 
     private val overviwViewModel: OverviewViewModel by viewModels()
 
-    val adapter = PhotoGridAdapter()
+    val adapter by lazy { PhotoGridAdapter(PhotoGridAdapter.OnClickListener {
+        overviwViewModel.displayPropertyDetails(it)
+    }) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -66,6 +70,16 @@ class OverviewFragment : Fragment(R.layout.fragment_overview) {
                 MarsApiStatus.DONE -> {
                     ivStatus.visibility = View.GONE
                 }
+                else -> {
+                    ivStatus.visibility = View.GONE
+                }
+            }
+        })
+
+        overviwViewModel.navigateToSelectedProperty.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                requireView().findNavController().navigate(OverviewFragmentDirections.actionShowDetail(it))
+                overviwViewModel.displayPropertyDetailsComplete()
             }
         })
     }

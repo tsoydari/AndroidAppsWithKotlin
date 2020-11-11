@@ -38,6 +38,11 @@
         android:name="com.example.android.marsrealestate.detail.DetailFragment"
         android:label="fragment_detail"
         tools:layout="@layout/fragment_detail">
+        <argument android:name="selectedProperty"
+            app:argType="com.example.android.marsrealestate.network.MarsProperty"/>
+        <action
+            android:id="@+id/action_detailFragment_to_overviewFragment"
+            app:destination="@id/overviewFragment" />
     </fragment>
 
 </navigation>

@@ -48,3 +48,5 @@ object MarsApi {
         retrofit.create(MarsApiService::class.java)
     }
 }
+
+enum class MarsApiStatus { LOADING, ERROR, DONE }

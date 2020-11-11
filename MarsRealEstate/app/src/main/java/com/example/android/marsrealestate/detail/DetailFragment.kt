@@ -16,9 +16,41 @@
 
 package com.example.android.marsrealestate.detail
 
+import android.os.Bundle
+import android.view.View
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.android.marsrealestate.R
+import kotlinx.android.synthetic.main.fragment_detail.*
 
 class DetailFragment : Fragment(R.layout.fragment_detail) {
+    val detailViewModel: DetailViewModel by viewModels {
+        DetailViewModelFactory(DetailFragmentArgs.fromBundle(requireArguments()).selectedProperty,
+                requireActivity().application)
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val marsProperty = detailViewModel.selectedProperty.value
+
+        tvPrice.text = detailViewModel.displayPropertyPrice ?: "Not found price"
+        tvProperty.text = detailViewModel.displayPropertyType ?: "Not found type"
+
+        marsProperty?.run {
+            imgSrcUrl?.run {
+                val imgUri = toUri().buildUpon().scheme("https").build()
+                Glide.with(ivMainPhoto.context)
+                        .load(imgUri)
+                        .apply(RequestOptions()
+                                .placeholder(R.drawable.loading_animation)
+                                .error(R.drawable.ic_broken_image))
+                        .into(ivMainPhoto)
+            }
+        }
+    }
 }
+
+
