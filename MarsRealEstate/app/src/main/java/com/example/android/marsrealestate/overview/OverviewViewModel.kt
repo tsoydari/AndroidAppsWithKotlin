@@ -25,15 +25,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.await
 
 class OverviewViewModel : ViewModel() {
 
     // The MutableLiveData String that stores the status of the most recent request
-    val response = MutableLiveData<String>("Set the Mars API Response here!")
+    val status = MutableLiveData<String>("Set the Mars API Response here!")
+    val property = MutableLiveData<MarsProperty>()
     private val viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
@@ -51,9 +49,13 @@ class OverviewViewModel : ViewModel() {
             var getPropertiesDeferred = MarsApi.retrofitService.getProperties()
             try {
                 var listResult = getPropertiesDeferred.await()
-                response.value = "Success: ${listResult.size} Mars properties retrieved"
+                if (listResult.size > 0) {
+                    property.value = listResult[0]
+                }
+                status.value = "Success: ${listResult.size} Mars properties retrieved"
             } catch (e: Exception) {
-                response.value = "Failure: ${e.message}"
+                status.value = "Failure: ${e.message}"
             }
+        }
     }
 }

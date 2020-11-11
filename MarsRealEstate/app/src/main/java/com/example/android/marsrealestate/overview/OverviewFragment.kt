@@ -18,17 +18,20 @@
 package com.example.android.marsrealestate.overview
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.android.marsrealestate.R
+import com.example.android.marsrealestate.bindImage
 import kotlinx.android.synthetic.main.fragment_overview.*
+import kotlinx.android.synthetic.main.grid_view_item.*
 
 /**
  * This fragment shows the the status of the Mars real-estate web services transaction.
  */
-class OverviewFragment : Fragment(R.layout.fragment_overview) {
+class OverviewFragment : Fragment(R.layout.grid_view_item) {
 
     private val viewModel: OverviewViewModel by viewModels()
 
@@ -44,8 +47,10 @@ class OverviewFragment : Fragment(R.layout.fragment_overview) {
     }
 
     private fun initObservers() {
-        viewModel.response.observe(viewLifecycleOwner, Observer {
-            tvResponse.text = it
+        viewModel.property.observe(viewLifecycleOwner, Observer {
+//            tvResponse.text = it.imgSrcUrl
+            Log.i("OverviewFragment", it.imgSrcUrl)
+            bindImage(ivMars, it.imgSrcUrl)
         })
     }
 }
