@@ -31,7 +31,7 @@ class OverviewViewModel : ViewModel() {
 
     // The MutableLiveData String that stores the status of the most recent request
     val status = MutableLiveData<String>("Set the Mars API Response here!")
-    val property = MutableLiveData<MarsProperty>()
+    val properties = MutableLiveData<List<MarsProperty>>()
     private val viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
@@ -50,7 +50,7 @@ class OverviewViewModel : ViewModel() {
             try {
                 var listResult = getPropertiesDeferred.await()
                 if (listResult.size > 0) {
-                    property.value = listResult[0]
+                    properties.value = listResult
                 }
                 status.value = "Success: ${listResult.size} Mars properties retrieved"
             } catch (e: Exception) {

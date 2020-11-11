@@ -16,3 +16,55 @@
  */
 
 package com.example.android.marsrealestate.overview
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.example.android.marsrealestate.R
+import com.example.android.marsrealestate.bindImage
+import com.example.android.marsrealestate.network.MarsProperty
+import kotlinx.android.synthetic.main.fragment_overview.*
+import kotlinx.android.synthetic.main.grid_view_item.*
+
+class PhotoGridAdapter : ListAdapter<MarsProperty, PhotoGridAdapter.MarsPropertyViewHolder>(DiffCallback) {
+
+    companion object DiffCallback : DiffUtil.ItemCallback<MarsProperty>() {
+        override fun areItemsTheSame(oldItem: MarsProperty, newItem: MarsProperty): Boolean {
+            return oldItem === newItem
+        }
+
+        override fun areContentsTheSame(oldItem: MarsProperty, newItem: MarsProperty): Boolean {
+            return oldItem.id == newItem.id
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MarsPropertyViewHolder {
+        return MarsPropertyViewHolder.from(parent)
+    }
+
+    override fun onBindViewHolder(holder: MarsPropertyViewHolder, position: Int) {
+        val marsProperty = getItem(position)
+        holder.bind(marsProperty)
+    }
+
+    class MarsPropertyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+
+        fun bind(marsProperty: MarsProperty) {
+            bindImage(itemView as ImageView, marsProperty.imgSrcUrl)
+        }
+
+        companion object {
+            fun from(parent: ViewGroup): MarsPropertyViewHolder {
+                val view = LayoutInflater.from(parent.context)
+                        .inflate(R.layout.grid_view_item, parent, false)
+                return MarsPropertyViewHolder(view)
+            }
+        }
+    }
+
+
+}

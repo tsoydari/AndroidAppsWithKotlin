@@ -31,13 +31,16 @@ import kotlinx.android.synthetic.main.grid_view_item.*
 /**
  * This fragment shows the the status of the Mars real-estate web services transaction.
  */
-class OverviewFragment : Fragment(R.layout.grid_view_item) {
+class OverviewFragment : Fragment(R.layout.fragment_overview) {
 
-    private val viewModel: OverviewViewModel by viewModels()
+    private val overviwViewModel: OverviewViewModel by viewModels()
+
+    val adapter = PhotoGridAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
+        rvGridPhotos.adapter = adapter
         initObservers()
     }
 
@@ -47,10 +50,10 @@ class OverviewFragment : Fragment(R.layout.grid_view_item) {
     }
 
     private fun initObservers() {
-        viewModel.property.observe(viewLifecycleOwner, Observer {
-//            tvResponse.text = it.imgSrcUrl
-            Log.i("OverviewFragment", it.imgSrcUrl)
-            bindImage(ivMars, it.imgSrcUrl)
+        overviwViewModel.properties.observe(viewLifecycleOwner, Observer {
+            it?.run {
+                adapter.submitList(it)
+            }
         })
     }
 }
