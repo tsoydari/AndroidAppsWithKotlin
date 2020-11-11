@@ -52,5 +52,21 @@ class OverviewFragment : Fragment(R.layout.fragment_overview) {
                 adapter.submitList(it)
             }
         })
+
+        overviwViewModel.status.observe(viewLifecycleOwner, Observer {status ->
+            when (status) {
+                MarsApiStatus.LOADING -> {
+                    ivStatus.visibility = View.VISIBLE
+                    ivStatus.setImageResource(R.drawable.loading_animation)
+                }
+                MarsApiStatus.ERROR -> {
+                    ivStatus.visibility = View.VISIBLE
+                    ivStatus.setImageResource(R.drawable.ic_connection_error)
+                }
+                MarsApiStatus.DONE -> {
+                    ivStatus.visibility = View.GONE
+                }
+            }
+        })
     }
 }

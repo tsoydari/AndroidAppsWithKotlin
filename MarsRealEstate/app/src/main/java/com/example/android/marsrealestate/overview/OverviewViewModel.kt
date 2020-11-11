@@ -17,7 +17,6 @@
 
 package com.example.android.marsrealestate.overview
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.android.marsrealestate.network.MarsApi
@@ -28,15 +27,15 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import retrofit2.await
 
+enum class MarsApiStatus { LOADING, ERROR, DONE }
+
 class OverviewViewModel : ViewModel() {
 
     // The MutableLiveData String that stores the status of the most recent request
-    val status = MutableLiveData<String>("Set the Mars API Response here!")
+    val status = MutableLiveData<MarsApiStatus>()
     val properties = MutableLiveData<List<MarsProperty>>()
     private val viewModelJob = Job()
-    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-//    With Default java.lang.IllegalStateException: Cannot invoke setValue on a background thread
-//    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Default)
+    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Default)
 
     init {
         getMarsRealEstateProperties()
@@ -51,15 +50,14 @@ class OverviewViewModel : ViewModel() {
         coroutineScope.launch {
             var getPropertiesDeferred = MarsApi.retrofitService.getProperties()
             try {
+                status.postValue(MarsApiStatus.LOADING)
                 var listResult = getPropertiesDeferred.await()
+                status.postValue(MarsApiStatus.DONE)
                 if (listResult.size > 0) {
-                    Log.i("OverviewViewModel", "Size ${listResult.size.toString()}")
                     properties.postValue(listResult)
                 }
-                status.value = "Success: ${listResult.size} Mars properties retrieved"
             } catch (e: Exception) {
-                Log.e("OverviewViewModel", e.message.toString())
-                status.value = "Failure: ${e.message}"
+                status.postValue(MarsApiStatus.ERROR)
             }
         }
     }
