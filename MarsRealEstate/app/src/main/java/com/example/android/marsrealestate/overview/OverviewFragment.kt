@@ -18,15 +18,12 @@
 package com.example.android.marsrealestate.overview
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.android.marsrealestate.R
-import com.example.android.marsrealestate.bindImage
 import kotlinx.android.synthetic.main.fragment_overview.*
-import kotlinx.android.synthetic.main.grid_view_item.*
 
 /**
  * This fragment shows the the status of the Mars real-estate web services transaction.

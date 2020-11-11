@@ -17,6 +17,7 @@
 
 package com.example.android.marsrealestate.overview
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.android.marsrealestate.network.MarsApi
@@ -34,6 +35,8 @@ class OverviewViewModel : ViewModel() {
     val properties = MutableLiveData<List<MarsProperty>>()
     private val viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+//    With Default java.lang.IllegalStateException: Cannot invoke setValue on a background thread
+//    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Default)
 
     init {
         getMarsRealEstateProperties()
@@ -50,10 +53,12 @@ class OverviewViewModel : ViewModel() {
             try {
                 var listResult = getPropertiesDeferred.await()
                 if (listResult.size > 0) {
-                    properties.value = listResult
+                    Log.i("OverviewViewModel", "Size ${listResult.size.toString()}")
+                    properties.postValue(listResult)
                 }
                 status.value = "Success: ${listResult.size} Mars properties retrieved"
             } catch (e: Exception) {
+                Log.e("OverviewViewModel", e.message.toString())
                 status.value = "Failure: ${e.message}"
             }
         }

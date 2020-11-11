@@ -21,14 +21,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.android.marsrealestate.R
-import com.example.android.marsrealestate.bindImage
 import com.example.android.marsrealestate.network.MarsProperty
-import kotlinx.android.synthetic.main.fragment_overview.*
-import kotlinx.android.synthetic.main.grid_view_item.*
 
 class PhotoGridAdapter : ListAdapter<MarsProperty, PhotoGridAdapter.MarsPropertyViewHolder>(DiffCallback) {
 
@@ -54,7 +54,15 @@ class PhotoGridAdapter : ListAdapter<MarsProperty, PhotoGridAdapter.MarsProperty
     class MarsPropertyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
         fun bind(marsProperty: MarsProperty) {
-            bindImage(itemView as ImageView, marsProperty.imgSrcUrl)
+            marsProperty.imgSrcUrl?.let {
+                val imgUri = marsProperty.imgSrcUrl.toUri().buildUpon().scheme("https").build()
+                Glide.with(itemView.context)
+                        .load(imgUri)
+                        .apply(RequestOptions()
+                                .placeholder(R.drawable.loading_animation)
+                                .error(R.drawable.ic_broken_image))
+                        .into(itemView as ImageView)
+            }
         }
 
         companion object {
