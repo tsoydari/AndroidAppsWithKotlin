@@ -26,28 +26,21 @@ import com.example.android.marsrealestate.network.MarsProperty
 /**
  * The [ViewModel] that is associated with the [DetailFragment].
  */
-class DetailViewModel(marsProperty: MarsProperty, app: Application) : AndroidViewModel(app) {
+class DetailViewModel(private val marsProperty: MarsProperty, app: Application) : AndroidViewModel(app) {
 
-    val selectedProperty by lazy {  MutableLiveData<MarsProperty>(marsProperty) }
+    val displayPropertyPrice = MutableLiveData<String>( app.getString(
+            when (marsProperty.isRental) {
+                true -> R.string.display_price_monthly_rental
+                false -> R.string.display_price
+            }, marsProperty.price)
+    )
 
-    val displayPropertyPrice by lazy {
-        selectedProperty.value?.let {
+    val displayPropertyType = MutableLiveData<String>( app.getString(R.string.display_type,
             app.applicationContext.getString(
-                    when (it.isRental) {
-                        true -> R.string.display_price_monthly_rental
-                        false -> R.string.display_price
-                    }, it.price)
-        }
-    }
-
-    val displayPropertyType by lazy {
-        selectedProperty.value?.let {
-            app.applicationContext.getString(R.string.display_type,
-                    app.applicationContext.getString(
-                            when (it.isRental) {
-                                true -> R.string.type_rent
-                                false -> R.string.type_sale
-                            }))
-        }
-    }
+                    when (marsProperty.isRental) {
+                        true -> R.string.type_rent
+                        false -> R.string.type_sale
+                    }))
+    )
 }
+
