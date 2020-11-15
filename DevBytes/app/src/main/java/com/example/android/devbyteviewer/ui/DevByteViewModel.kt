@@ -20,8 +20,8 @@ package com.example.android.devbyteviewer.ui
 import android.app.Application
 import androidx.lifecycle.*
 import com.example.android.devbyteviewer.domain.Video
+import com.example.android.devbyteviewer.domain.asDomainModel
 import com.example.android.devbyteviewer.network.Network
-import com.example.android.devbyteviewer.network.asDomainModel
 import kotlinx.coroutines.launch
 import java.io.IOException
 
