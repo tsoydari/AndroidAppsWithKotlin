@@ -18,6 +18,7 @@
 package com.example.android.devbyteviewer.domain
 
 import android.net.Uri
+import com.example.android.devbyteviewer.database.DatabaseVideo
 import com.example.android.devbyteviewer.util.smartTruncate
 import com.squareup.moshi.JsonClass
 
@@ -87,4 +88,15 @@ fun NetworkVideoContainer.asDomainModel(): List<Video> {
                 updated = it.updated,
                 thumbnail = it.thumbnail)
     }
+}
+
+fun NetworkVideoContainer.asDatabaseModel(): Array<DatabaseVideo> {
+    return videos.map {
+        DatabaseVideo(
+                title = it.title,
+                description = it.description,
+                url = it.url,
+                updated = it.updated,
+                thumbnail = it.thumbnail)
+    }.toTypedArray()
 }
