@@ -32,8 +32,7 @@
             android:layout_marginTop="16dp"
             android:fontFamily="@font/lobster_two"
             android:text="@string/about_google_developer_groups"
-            android:textColor="#555555"
-            android:textSize="24sp"
+            style="@style/TextAppearance.Title"
             app:layout_constraintEnd_toStartOf="@+id/gridEnd"
             app:layout_constraintStart_toStartOf="@+id/gridStart"
             app:layout_constraintTop_toBottomOf="@id/ivHome" />
@@ -54,8 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="13dp"
             android:text="@string/gdgs_are"
-            android:textColor="#555555"
-            android:textSize="18sp"
+            style="@style/TextAppearance.Subtitle"
             app:layout_constraintEnd_toStartOf="@id/gridEnd"
             app:layout_constraintStart_toEndOf="@id/gridStart"
             app:layout_constraintTop_toBottomOf="@+id/tviHomeItro" />
