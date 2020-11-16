@@ -1,98 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="true"
+            android:paddingBottom="16dp"
+            tools:context=".home.HomeFragment">
+
+            <ImageView
+                android:id="@+id/ivHome"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintDimensionRatio="4:3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/behind" />
+
+            <TextView
+                android:id="@+id/tvHomeTitle"
+                style="@style/TextAppearance.Title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/lobster_two"
+                android:text="@string/about_google_developer_groups"
+                app:layout_constraintEnd_toStartOf="@+id/gridEnd"
+                app:layout_constraintStart_toStartOf="@+id/gridStart"
+                app:layout_constraintTop_toBottomOf="@id/ivHome" />
+
+            <TextView
+                android:id="@+id/tviHomeItro"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/gdg_description_long"
+                app:layout_constraintEnd_toStartOf="@+id/gridEnd"
+                app:layout_constraintStart_toStartOf="@+id/gridStart"
+                app:layout_constraintTop_toBottomOf="@id/tvHomeTitle" />
+
+            <TextView
+                android:id="@+id/tvHomeSubtitle"
+                style="@style/TextAppearance.Subtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
+                android:text="@string/gdgs_are"
+                app:layout_constraintEnd_toStartOf="@id/gridEnd"
+                app:layout_constraintStart_toEndOf="@id/gridStart"
+                app:layout_constraintTop_toBottomOf="@+id/tviHomeItro" />
+
+            <TextView
+                android:id="@+id/tvHomeDescription"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/gdg_description_bullets"
+                app:layout_constraintEnd_toStartOf="@+id/gridEnd"
+                app:layout_constraintStart_toStartOf="@+id/gridStart"
+                app:layout_constraintTop_toBottomOf="@id/tvHomeSubtitle" />
+
+            <ImageView
+                android:id="@+id/ivHomeEnd"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="16dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="3:1.5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvHomeDescription"
+                app:srcCompat="@drawable/wtm" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gridStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="16dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gridEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="16dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatBtnSearch"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clipToPadding="true"
-        android:paddingBottom="16dp"
-        tools:context=".home.HomeFragment">
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        app:srcCompat="@drawable/ic_gdg">
 
-        <ImageView
-            android:id="@+id/ivHome"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintDimensionRatio="4:3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/behind" />
-
-        <!-- TODO (01) Add textSize and textColor attributes to the title and
-             subtitle TextViews. -->
-        <TextView
-            android:id="@+id/tvHomeTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/lobster_two"
-            android:text="@string/about_google_developer_groups"
-            style="@style/TextAppearance.Title"
-            app:layout_constraintEnd_toStartOf="@+id/gridEnd"
-            app:layout_constraintStart_toStartOf="@+id/gridStart"
-            app:layout_constraintTop_toBottomOf="@id/ivHome" />
-
-        <TextView
-            android:id="@+id/tviHomeItro"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/gdg_description_long"
-            app:layout_constraintEnd_toStartOf="@+id/gridEnd"
-            app:layout_constraintStart_toStartOf="@+id/gridStart"
-            app:layout_constraintTop_toBottomOf="@id/tvHomeTitle" />
-
-        <TextView
-            android:id="@+id/tvHomeSubtitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="13dp"
-            android:text="@string/gdgs_are"
-            style="@style/TextAppearance.Subtitle"
-            app:layout_constraintEnd_toStartOf="@id/gridEnd"
-            app:layout_constraintStart_toEndOf="@id/gridStart"
-            app:layout_constraintTop_toBottomOf="@+id/tviHomeItro" />
-
-        <TextView
-            android:id="@+id/tvHomeDescription"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/gdg_description_bullets"
-            app:layout_constraintEnd_toStartOf="@+id/gridEnd"
-            app:layout_constraintStart_toStartOf="@+id/gridStart"
-            app:layout_constraintTop_toBottomOf="@id/tvHomeSubtitle" />
-
-        <ImageView
-            android:id="@+id/ivHomeEnd"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="16dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="3:1.5"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvHomeDescription"
-            app:srcCompat="@drawable/wtm" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/gridStart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="16dp" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/gridEnd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_end="16dp" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+    </com.google.android.material.floatingactionbutton.FloatingActionButton>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
