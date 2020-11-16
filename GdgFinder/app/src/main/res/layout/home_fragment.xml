@@ -30,7 +30,7 @@
 
             <TextView
                 android:id="@+id/tvHomeTitle"
-                style="@style/TextAppearance.Title"
+                android:textAppearance="?textAppearanceHeadline5"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -52,7 +52,7 @@
 
             <TextView
                 android:id="@+id/tvHomeSubtitle"
-                style="@style/TextAppearance.Subtitle"
+                android:textAppearance="?textAppearanceHeadline6"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="13dp"
