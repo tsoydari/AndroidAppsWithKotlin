@@ -15,7 +15,8 @@ import com.example.android.devbyteviewer.domain.Video
 
 class DevByteAdapter(private val callback: VideoClick) : RecyclerView.Adapter<DevByteAdapter.DevByteViewHolder>() {
 
-    var videos = MutableLiveData<List<Video>>()
+    val videos = MutableLiveData<List<Video>>()
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DevByteViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -38,7 +39,7 @@ class DevByteAdapter(private val callback: VideoClick) : RecyclerView.Adapter<De
 
         fun bind(item: Video, callback: VideoClick) {
             title.text = item.title
-            description.text = item.description
+            description.text = item.shortDescription
             Glide.with(itemView.context)
                     .load(item.thumbnail)
                     .into(thumbnail)

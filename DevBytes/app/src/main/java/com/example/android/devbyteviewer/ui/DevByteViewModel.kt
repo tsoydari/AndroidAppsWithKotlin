@@ -29,8 +29,7 @@ import java.io.IOException
 
 class DevByteViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val database = getDatabase(application)
-    private val videosRepository = database?.let{ VideosRepository(it) }
+    private val videosRepository = getDatabase(application)?.let{ VideosRepository(it) }
     val playlist = videosRepository?.videos
 
     init {

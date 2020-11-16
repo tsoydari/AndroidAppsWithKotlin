@@ -30,8 +30,7 @@ class RefreshDataWorker(appContext: Context, params: WorkerParameters):
      * A coroutine-friendly method to do your work.
      */
     override suspend fun doWork(): Result {
-        val database = getDatabase(applicationContext)
-        val repository = database?.let {VideosRepository(it)}
+        val repository = getDatabase(applicationContext)?.let {VideosRepository(it)}
         return try {
             repository?.refreshVideos()
             Result.success()

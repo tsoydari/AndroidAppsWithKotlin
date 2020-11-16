@@ -20,6 +20,7 @@ package com.example.android.devbyteviewer.ui
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -54,6 +55,7 @@ class DevByteFragment : Fragment(R.layout.fragment_dev_byte) {
 
         // Try to generate a direct intent to the YouTube app
         var intent = Intent(Intent.ACTION_VIEW, it.launchUri)
+        Log.i("DevByteFragment", it.launchUri.toString())
         if (intent.resolveActivity(packageManager) == null) {
             // YouTube app isn't found, use the web url
             intent = Intent(Intent.ACTION_VIEW, Uri.parse(it.url))
@@ -63,15 +65,14 @@ class DevByteFragment : Fragment(R.layout.fragment_dev_byte) {
     })
 
     private fun initObservers() {
-        devByteViewModel.playlist.observe(viewLifecycleOwner, Observer<List<Video>> { videos ->
+        devByteViewModel.playlist?.observe(viewLifecycleOwner, Observer<List<Video>> { videos ->
 
-            videos?.run {
-                devByteAdapter.videos = MutableLiveData(videos)
-                rvFragment.visibility = View.GONE
-            } ?:
-            if (videos == null) {
-                rvFragment.visibility = View.VISIBLE
-            }
+            rvFragment.visibility = videos?.let {
+                devByteAdapter.videos.postValue(it)
+                devByteAdapter.notifyDataSetChanged()
+                View.VISIBLE
+            } ?: View.GONE
+
         })
     }
 }
