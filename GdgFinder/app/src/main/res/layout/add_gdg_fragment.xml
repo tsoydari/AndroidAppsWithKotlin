@@ -109,32 +109,29 @@
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="4dp"
             android:singleLine="true"
-            app:layout_constraintBottom_toTopOf="@+id/etWhy"
+            app:layout_constraintBottom_toTopOf="@+id/contentGroup"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etCountry" />
 
         <!--wrap in a layout to group-->
-        <!--<LinearLayout -->
-        <!--android:id="@+id/contentGroup"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:focusable="true"-->
-        <!--app:layout_constraintTop_toBottomOf="@id/EditTextRegion"-->
-        <!--android:orientation="vertical"-->
-        <!--app:layout_constraintStart_toStartOf="@+id/EditTextRegion"-->
-        <!--app:layout_constraintEnd_toEndOf="@+id/EditTextRegion"-->
-        <!--android:layout_marginTop="@dimen/spacing_normal"-->
-        <!--app:layout_constraintBottom_toTopOf="@+id/button"-->
-        <!--android:layout_marginBottom="8dp">-->
+        <LinearLayout
+            android:id="@+id/contentGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            app:layout_constraintTop_toBottomOf="@id/etRegion"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="@+id/etRegion"
+            app:layout_constraintEnd_toEndOf="@+id/etRegion"
+            android:layout_marginTop="@dimen/spacing_normal"
+            app:layout_constraintBottom_toTopOf="@+id/btnOk"
+            android:layout_marginBottom="8dp">
 
         <TextView
             android:id="@+id/tvWhy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="@dimen/spacing_normal"
-            android:layout_marginBottom="1dp"
             android:contentDescription="@string/motivation"
             android:text="@string/motivation"
             app:layout_constraintBottom_toTopOf="@+id/etWhy"
@@ -145,10 +142,6 @@
             android:id="@+id/etWhy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginBottom="8dp"
             android:contentDescription="@string/enter_motivation"
             android:ems="10"
             android:inputType="textMultiLine"
@@ -157,7 +150,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etRegion" />
 
-        <!--</LinearLayout>-->
+        </LinearLayout>
 
         <Button
             android:id="@+id/btnOk"
@@ -171,6 +164,6 @@
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etWhy" />
+            app:layout_constraintTop_toBottomOf="@+id/contentGroup" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
