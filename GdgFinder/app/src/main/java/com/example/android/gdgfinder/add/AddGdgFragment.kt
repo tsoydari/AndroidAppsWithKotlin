@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.android.gdgfinder.R
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.add_gdg_fragment.*
 
 class AddGdgFragment : Fragment(R.layout.add_gdg_fragment) {
 
@@ -27,6 +28,9 @@ class AddGdgFragment : Fragment(R.layout.add_gdg_fragment) {
                     Snackbar.LENGTH_SHORT // How long to display the message.
                 ).show()
                 addGdgViewModel.doneShowingSnackbar()
+
+                btnOk.text = getText(R.string.done)
+                btnOk.contentDescription = getString(R.string.submitted)
             }
         })
     }
