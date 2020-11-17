@@ -6,11 +6,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
+
+    val navController by lazy { findNavController(R.id.fragmentNavHost) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupNavigation()
@@ -18,10 +22,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     override fun onSupportNavigateUp()
-            = findNavController(R.id.fragmentNavHost).navigateUp()
+    = navigateUp(navController, drawLayout)
+//            = findNavController(R.id.fragmentNavHost).navigateUp()
 
     private fun setupNavigation() {
-        val navController = findNavController(R.id.fragmentNavHost)
 
         setSupportActionBar(toolbar)
 
