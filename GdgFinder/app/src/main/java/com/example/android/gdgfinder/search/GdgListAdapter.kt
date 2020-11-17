@@ -1,7 +1,6 @@
 package com.example.android.gdgfinder.search
 
 import android.view.LayoutInflater
-import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -10,16 +9,16 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.gdgfinder.R
-import com.example.android.gdgfinder.network.GdgChapter
+import com.example.android.gdgfinder.network.GdgChapterDTO
 import com.example.android.gdgfinder.search.GdgListAdapter.GdgListViewHolder
 
-class GdgListAdapter(private val clickListener: GdgClickListener): ListAdapter<GdgChapter, GdgListViewHolder>(DiffCallback){
-    companion object DiffCallback : DiffUtil.ItemCallback<GdgChapter>() {
-        override fun areItemsTheSame(oldItem: GdgChapter, newItem: GdgChapter): Boolean {
+class GdgListAdapter(private val clickListener: (chapterDTO: GdgChapterDTO) -> Unit): ListAdapter<GdgChapterDTO, GdgListViewHolder>(DiffCallback){
+    companion object DiffCallback : DiffUtil.ItemCallback<GdgChapterDTO>() {
+        override fun areItemsTheSame(oldItem: GdgChapterDTO, newItem: GdgChapterDTO): Boolean {
             return oldItem === newItem
         }
 
-        override fun areContentsTheSame(oldItem: GdgChapter, newItem: GdgChapter): Boolean {
+        override fun areContentsTheSame(oldItem: GdgChapterDTO, newItem: GdgChapterDTO): Boolean {
             return oldItem == newItem
         }
     }
@@ -52,14 +51,10 @@ class GdgListAdapter(private val clickListener: GdgClickListener): ListAdapter<G
         private val layout: ConstraintLayout = itemView.findViewById(R.id.layoutItem)
         private val name: TextView = itemView.findViewById(R.id.tvChapterName)
 
-        fun bind(listener: GdgClickListener, gdgChapter: GdgChapter) {
-            layout.setOnClickListener{listener.onClick(gdgChapter)}
-            name.text = gdgChapter.name
+        fun bind(clickListener: (chapterDTO: GdgChapterDTO) -> Unit, gdgChapterDTO: GdgChapterDTO) {
+            layout.setOnClickListener{clickListener(gdgChapterDTO)}
+            name.text = gdgChapterDTO.name
         }
 
     }
-}
-
-class GdgClickListener(val clickListener: (chapter: GdgChapter) -> Unit) {
-    fun onClick(chapter: GdgChapter) = clickListener(chapter)
 }

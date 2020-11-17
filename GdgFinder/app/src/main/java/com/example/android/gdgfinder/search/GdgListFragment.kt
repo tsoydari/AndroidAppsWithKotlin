@@ -22,44 +22,54 @@ private const val LOCATION_PERMISSION = "android.permission.ACCESS_FINE_LOCATION
 
 class GdgListFragment : Fragment(R.layout.fragment_gdg_list) {
 
-
     private val gdgListViewModel: GdgListViewModel by viewModels()
     private val gdgListAdapter: GdgListAdapter by lazy { initAdapter() }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requestLastLocationOrStartLocationUpdates()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setHasOptionsMenu(true)
-
         rvGdgChapterList.adapter = gdgListAdapter
-
         initObservers()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        requestLastLocationOrStartLocationUpdates()
+    /**
+     * This will be called by Android when the user responds to the permission request.
+     *
+     * If granted, continue with the operation that the user gave us permission to do.
+     */
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when(requestCode) {
+            LOCATION_PERMISSION_REQUEST -> {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    requestLastLocationOrStartLocationUpdates()
+                }
+            }
+        }
     }
 
-    private fun initAdapter() = GdgListAdapter(GdgClickListener { chapter ->
+    private fun initAdapter() = GdgListAdapter { chapter ->
         val destination = Uri.parse(chapter.website)
         startActivity(Intent(Intent.ACTION_VIEW, destination))
-    })
+    }
 
     private fun initObservers() {
-        gdgListViewModel.showNeedLocation.observe(viewLifecycleOwner, object: Observer<Boolean> {
-            override fun onChanged(show: Boolean?) {
-                // Snackbar is like Toast but it lets us show forever
-                if (show == true) {
+        gdgListViewModel.showNeedLocation.observe(viewLifecycleOwner,
+            Observer<Boolean> { show -> // Snackbar is like Toast but it lets us show forever
+                if (show) {
                     Snackbar.make(
                         clGdgList,
                         "No location. Enable location in settings (hint: test with Maps) then check app permissions!",
                         Snackbar.LENGTH_LONG
                     ).show()
                 }
-            }
-        })
+            })
 
         gdgListViewModel.gdgList.observe(viewLifecycleOwner, Observer { data ->
             gdgListAdapter.submitList(data) {
@@ -73,9 +83,8 @@ class GdgListFragment : Fragment(R.layout.fragment_gdg_list) {
             }
         })
 
-        gdgListViewModel.regionList.observe(viewLifecycleOwner, object: Observer<List<String>> {
-            override fun onChanged(data: List<String>?) {
-                data ?: return
+        gdgListViewModel.regionList.observe(viewLifecycleOwner,Observer<List<String>> {data ->
+                data ?: return@Observer
                 val children = data.map { regionName ->
                     val chip = LayoutInflater.from(chipRegionList.context)
                         .inflate(R.layout.region, chipRegionList, false) as Chip
@@ -92,7 +101,7 @@ class GdgListFragment : Fragment(R.layout.fragment_gdg_list) {
                 for (chip in children) {
                     chipRegionList.addView(chip)
                 }
-            }
+
         })
     }
 
@@ -147,21 +156,6 @@ class GdgListFragment : Fragment(R.layout.fragment_gdg_list) {
         fusedLocationClient.requestLocationUpdates(request, callback, null)
     }
 
-    /**
-     * This will be called by Android when the user responds to the permission request.
-     *
-     * If granted, continue with the operation that the user gave us permission to do.
-     */
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when(requestCode) {
-            LOCATION_PERMISSION_REQUEST -> {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    requestLastLocationOrStartLocationUpdates()
-                }
-            }
-        }
-    }
 }
 
 

@@ -7,7 +7,7 @@ import kotlinx.android.parcel.Parcelize
 
 
 @Parcelize
-data class GdgChapter(
+data class GdgChapterDTO(
     @Json(name = "chapter_name") val name: String,
     @Json(name = "cityarea") val city: String,
     val country: String,
@@ -24,9 +24,9 @@ data class LatLong(
 ) : Parcelable
 
 @Parcelize
-data class GdgResponse(
+data class GdgResponseDTO(
         @Json(name = "filters_") val filters: Filter,
-        @Json(name = "data") val chapters: List<GdgChapter>
+        @Json(name = "data") val chapterDTOS: List<GdgChapterDTO>
 ): Parcelable
 
 @Parcelize

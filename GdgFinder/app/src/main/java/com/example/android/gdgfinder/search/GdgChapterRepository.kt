@@ -2,8 +2,8 @@ package com.example.android.gdgfinder.search
 
 import android.location.Location
 import com.example.android.gdgfinder.network.GdgApiService
-import com.example.android.gdgfinder.network.GdgChapter
-import com.example.android.gdgfinder.network.GdgResponse
+import com.example.android.gdgfinder.network.GdgChapterDTO
+import com.example.android.gdgfinder.network.GdgResponseDTO
 import com.example.android.gdgfinder.network.LatLong
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
@@ -40,10 +40,10 @@ class GdgChapterRepository(gdgApiService: GdgApiService) {
      * This works by first waiting for any previously in-progress sorts, and if a sort has not yet started
      * it will start a new sort (which may happen if location is disabled on the device)
      */
-    suspend fun getChaptersForFilter(filter: String?): List<GdgChapter> {
+    suspend fun getChaptersForFilter(filter: String?): List<GdgChapterDTO> {
         val data = sortedData()
         return when(filter) {
-            null -> data.chapters
+            null -> data.chapterDTOS
             else -> data.chaptersByRegion.getOrElse(filter) { emptyList() }
         }
     }
@@ -132,29 +132,29 @@ class GdgChapterRepository(gdgApiService: GdgApiService) {
      * only be called by [doSortData].
      */
     private class SortedData private constructor(
-        val chapters: List<GdgChapter>,
+        val chapterDTOS: List<GdgChapterDTO>,
         val filters: List<String>,
-        val chaptersByRegion: Map<String, List<GdgChapter>>
+        val chaptersByRegion: Map<String, List<GdgChapterDTO>>
     ) {
 
         companion object {
             /**
-             * Sort the data from a [GdgResponse] by the specified location.
+             * Sort the data from a [GdgResponseDTO] by the specified location.
              *
-             * @param response the response to sort
+             * @param responseDTO the response to sort
              * @param location the location to sort by, if null the data will not be sorted.
              */
-            suspend fun from(response: GdgResponse, location: Location?): SortedData {
+            suspend fun from(responseDTO: GdgResponseDTO, location: Location?): SortedData {
                 return withContext(Dispatchers.Default) {
                     // this sorting is too expensive to do on the main thread, so do thread confinement here.
-                    val chapters: List<GdgChapter> = response.chapters.sortByDistanceFrom(location)
+                    val chapterDTOS: List<GdgChapterDTO> = responseDTO.chapterDTOS.sortByDistanceFrom(location)
                     // use distinctBy which will maintain the input order - this will have the effect of making
                     // a filter list sorted by the distance from the current location
-                    val filters: List<String> = chapters.map { it.region } .distinctBy { it }
+                    val filters: List<String> = chapterDTOS.map { it.region } .distinctBy { it }
                     // group the chapters by region so that filter queries don't require any work
-                    val chaptersByRegion: Map<String, List<GdgChapter>> = chapters.groupBy { it.region }
+                    val chaptersByRegion: Map<String, List<GdgChapterDTO>> = chapterDTOS.groupBy { it.region }
                     // return the sorted result
-                    SortedData(chapters, filters, chaptersByRegion)
+                    SortedData(chapterDTOS, filters, chaptersByRegion)
                 }
 
             }
@@ -165,7 +165,7 @@ class GdgChapterRepository(gdgApiService: GdgApiService) {
              *
              * @param currentLocation returned list will be sorted by the distance, or unsorted if null
              */
-            private fun List<GdgChapter>.sortByDistanceFrom(currentLocation: Location?): List<GdgChapter> {
+            private fun List<GdgChapterDTO>.sortByDistanceFrom(currentLocation: Location?): List<GdgChapterDTO> {
                 currentLocation ?: return this
 
                 return sortedBy { distanceBetween(it.geo, currentLocation)}

@@ -3,7 +3,7 @@ package com.example.android.gdgfinder.search
 import android.location.Location
 import androidx.lifecycle.*
 import com.example.android.gdgfinder.network.GdgApi
-import com.example.android.gdgfinder.network.GdgChapter
+import com.example.android.gdgfinder.network.GdgChapterDTO
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -16,7 +16,7 @@ class GdgListViewModel: ViewModel() {
     private var filter = FilterHolder()
     private var currentJob: Job? = null
 
-    val gdgList = MutableLiveData<List<GdgChapter>>()
+    val gdgList = MutableLiveData<List<GdgChapterDTO>>()
     val regionList = MutableLiveData<List<String>>()
     val showNeedLocation = MutableLiveData<Boolean>()
 

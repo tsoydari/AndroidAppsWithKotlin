@@ -14,7 +14,7 @@ interface GdgApiService {
     @GET("gdg-directory.json")
     fun getChapters():
     // The Coroutine Call Adapter allows us to return a Deferred, a Job with a result
-            Deferred<GdgResponse>
+            Deferred<GdgResponseDTO>
 }
 
 object GdgApi {

@@ -14,10 +14,6 @@ import kotlinx.android.synthetic.main.home_fragment.*
 
 class HomeFragment : Fragment(R.layout.home_fragment) {
 
-    companion object {
-        fun newInstance() = HomeFragment()
-    }
-
     private val homeViewModel: HomeViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
